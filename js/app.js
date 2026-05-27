@@ -7,6 +7,7 @@ import { renderEditRecent } from "./views/edit-recent.js";
 import { loadLog, loadProgram } from "./drive.js";
 import { parseLog } from "./log-parser.js";
 import { programDayInfo } from "./program-index.js";
+import { getValidToken, signIn } from "./auth.js";
 
 const main = document.getElementById("app-main");
 const headerTitle = document.getElementById("header-title");
@@ -19,6 +20,31 @@ const state = {
 
 async function bootstrap() {
   state.day = programDayInfo();
+
+  // If no valid token, show sign-in button and wait for user tap.
+  if (!getValidToken()) {
+    main.innerHTML = `<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:60vh;gap:1.5rem">
+      <div style="font-size:2rem">🏋️</div>
+      <p style="margin:0;color:var(--text-secondary)">Sign in to load your training data</p>
+      <button id="sign-in-btn" style="padding:.75rem 2rem;font-size:1rem;border-radius:.5rem;background:var(--accent);color:#fff;border:none;cursor:pointer">Sign in with Google</button>
+    </div>`;
+    document.getElementById("sign-in-btn").addEventListener("click", async () => {
+      try {
+        await signIn({ interactive: true });
+        main.innerHTML = `<div id="loading">Loading…</div>`;
+        await loadAndRender();
+      } catch (err) {
+        main.innerHTML = `<div class="error"><p>Sign in failed: ${escapeHtml(err.message)}</p><button id="retry">Retry</button></div>`;
+        document.getElementById("retry").addEventListener("click", () => location.reload());
+      }
+    });
+    return;
+  }
+
+  await loadAndRender();
+}
+
+async function loadAndRender() {
   try {
     const log = await loadLog();
     state.log = { ...log, parsed: parseLog(log.text) };
