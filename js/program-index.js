@@ -1,7 +1,7 @@
 // Program structure derived from hybrid-athlete-program.md.
 // Hardcoded for v1. If program changes, regenerate this file.
 
-import { config } from "../config.local.js";
+import { config } from "../config.js";
 
 const MS_PER_DAY = 86400000;
 

@@ -2,7 +2,7 @@
 // Operations: find a file by name within the configured folder, read its content
 // (returning ETag), and write content back (with If-Match for conflict detection).
 
-import { config } from "../config.local.js";
+import { config } from "../config.js";
 import { getOrRefreshToken } from "./auth.js";
 import { saveCachedLog } from "./storage.js";
 

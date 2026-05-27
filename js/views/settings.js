@@ -1,4 +1,4 @@
-import { config } from "../../config.local.js";
+import { config } from "../../config.js";
 import { getToken, clearToken, getCachedLog } from "../storage.js";
 import { signIn, signOut } from "../auth.js";
 

@@ -4,7 +4,7 @@
 // If you want a tighter scope, switch to drive.file and have the user pick
 // the folder via Google Picker API (out of scope for v1).
 
-import { config } from "../config.local.js";
+import { config } from "../config.js";
 import { saveToken, getToken, clearToken } from "./storage.js";
 
 const SCOPE = "https://www.googleapis.com/auth/drive";
