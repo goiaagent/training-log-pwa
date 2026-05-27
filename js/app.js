@@ -3,6 +3,7 @@ import { renderLog } from "./views/log.js";
 import { renderAdjust } from "./views/adjust.js";
 import { renderReviews } from "./views/reviews.js";
 import { renderSettings } from "./views/settings.js";
+import { renderEditRecent } from "./views/edit-recent.js";
 import { loadLog, loadProgram } from "./drive.js";
 import { parseLog } from "./log-parser.js";
 import { programDayInfo } from "./program-index.js";
@@ -41,6 +42,7 @@ function route() {
     adjust: renderAdjust,
     reviews: renderReviews,
     settings: renderSettings,
+    "edit-recent": renderEditRecent,
   };
   const fn = renderers[view] || renderToday;
   setActiveTab(view);
