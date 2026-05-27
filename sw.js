@@ -1,7 +1,7 @@
 // Minimal service worker: cache the app shell so the PWA opens offline.
 // Drive API calls always go to network (no caching of training data).
 
-const CACHE = "tlpwa-v1";
+const CACHE = "tlpwa-v2";
 const SHELL = [
   "./",
   "./index.html",
