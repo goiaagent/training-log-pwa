@@ -246,13 +246,24 @@ export const SESSIONS = {
       },
       {
         id: "core-dragon-flag",
-        type: "bodyweight_time",
-        name: "Dragon Flag + T2B",
+        type: "weighted_reps",
+        name: "Dragon Flag",
         prescriptions: {
-          1: { stage: "DF + T2B", sets: 3, hold_seconds: 6 },
-          2: { stage: "DF + T2B", sets: 3, hold_seconds: 8 },
-          3: { stage: "DF + T2B", sets: 3, hold_seconds: 10 },
-          4: { stage: "DF + T2B", sets: 2, hold_seconds: 6 },
+          1: { load_kg: 0, sets: 3, reps: 5 },
+          2: { load_kg: 0, sets: 3, reps: 6 },
+          3: { load_kg: 0, sets: 3, reps: 8 },
+          4: { load_kg: 0, sets: 2, reps: 5 },
+        },
+      },
+      {
+        id: "core-t2b",
+        type: "weighted_reps",
+        name: "Toes-to-Bar",
+        prescriptions: {
+          1: { load_kg: 0, sets: 3, reps: 6 },
+          2: { load_kg: 0, sets: 3, reps: 8 },
+          3: { load_kg: 0, sets: 3, reps: 10 },
+          4: { load_kg: 0, sets: 2, reps: 6 },
         },
       },
       {
