@@ -1,14 +1,14 @@
 // Minimal service worker: cache the app shell so the PWA opens offline.
-// Drive API calls always go to network (no caching of training data).
+// GitHub raw fetches always go to network.
 
-const CACHE = "tlpwa-v2";
+const CACHE = "tlpwa-v3";
 const SHELL = [
   "./",
   "./index.html",
   "./css/styles.css",
+  "./config.js",
   "./js/app.js",
-  "./js/auth.js",
-  "./js/drive.js",
+  "./js/remote.js",
   "./js/log-parser.js",
   "./js/log-builder.js",
   "./js/program-index.js",
@@ -20,6 +20,7 @@ const SHELL = [
   "./js/views/adjust.js",
   "./js/views/reviews.js",
   "./js/views/settings.js",
+  "./js/views/edit-recent.js",
 ];
 
 self.addEventListener("install", (e) => {
@@ -36,8 +37,8 @@ self.addEventListener("activate", (e) => {
 
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
-  // Pass through any Google/API requests to network only.
-  if (url.host.includes("googleapis.com") || url.host.includes("google.com")) return;
+  // Always network for the remote log fetch.
+  if (url.host.includes("raw.githubusercontent.com")) return;
   e.respondWith(
     caches.match(e.request).then((cached) => cached || fetch(e.request))
   );

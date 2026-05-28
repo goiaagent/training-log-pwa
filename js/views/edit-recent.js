@@ -1,7 +1,8 @@
 import { buildSessionMarkdown } from "../log-builder.js";
-import { readFile, writeFile } from "../drive.js";
 import { getSession } from "../program-index.js";
 import { fieldsFor } from "../exercise-types.js";
+import { getLogText, saveLogText } from "../storage.js";
+import { parseLog } from "../log-parser.js";
 
 export function renderEditRecent(root, state, { navigate }) {
   const recent = state.log.parsed.sessions[0];
@@ -108,8 +109,7 @@ function isNumeric(input) {
 }
 
 async function replaceRecentInLog(state, oldSession, newSession) {
-  const latest = await readFile(state.log.fileId);
-  let text = latest.text;
+  let text = getLogText() || state.log.text;
 
   // Find and remove the existing block for that date+session name.
   const startMarker = `### ${oldSession.date} — ${oldSession.dayOfWeek} — ${oldSession.name}`;
@@ -129,7 +129,8 @@ async function replaceRecentInLog(state, oldSession, newSession) {
   const ts = new Date().toISOString().slice(0, 16).replace("T", " ");
   const final = merged.replace(/\*\*Last updated:\*\*[^\n]*/, `**Last updated:** ${ts}`);
 
-  await writeFile(state.log.fileId, final, latest.etag);
+  saveLogText(final);
+  state.log = { text: final, parsed: parseLog(final) };
 }
 
 function esc(s) {

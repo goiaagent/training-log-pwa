@@ -2,8 +2,7 @@ import { getSession, prescribedForBlock } from "../program-index.js";
 import { fieldsFor, validateEntry } from "../exercise-types.js";
 import { resolvePrescribed, isAdjustmentActive } from "../prescribed.js";
 import { buildSessionMarkdown, insertSession } from "../log-builder.js";
-import { writeFile, readFile } from "../drive.js";
-import { getDraft, saveDraft, clearDraft } from "../storage.js";
+import { getDraft, saveDraft, clearDraft, getLogText, saveLogText } from "../storage.js";
 
 export function renderToday(root, state, { reload }) {
   const today = new Date();
@@ -79,7 +78,7 @@ function renderSession(sess, day, adjustments, today, dateIso, idx) {
       ${sess.blocks
         .map((block, bi) => renderBlock(block, day.phase, adjustments, today, idx, bi))
         .join("")}
-      <button class="save-btn" data-action="save" data-session-idx="${idx}">Save session to Drive</button>
+      <button class="save-btn" data-action="save" data-session-idx="${idx}">Save session</button>
       <div class="save-status" data-status-for="${idx}"></div>
     </section>
   `;
@@ -365,11 +364,12 @@ async function saveSession(state, dateIso, sess, sessIdx, root) {
     globalNotes: pre.global_notes || "",
   });
 
-  // Re-fetch latest log, splice, write with ETag.
-  const latest = await readFile(state.log.fileId);
+  // Splice into local log.md and persist.
+  const latest = getLogText() || state.log.text;
   const timestampStr = new Date().toISOString().slice(0, 16).replace("T", " ");
-  const newContent = insertSession(latest.text, md, timestampStr);
-  await writeFile(state.log.fileId, newContent, latest.etag);
+  const newContent = insertSession(latest, md, timestampStr);
+  saveLogText(newContent);
+  state.log = { text: newContent, parsed: (await import("../log-parser.js")).parseLog(newContent) };
 }
 
 function blockLabel(block, sess) {

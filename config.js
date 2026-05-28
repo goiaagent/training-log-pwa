@@ -1,7 +1,8 @@
 export const config = {
-  googleClientId: "988466560290-i9r1fth4qovkh27r30eke79o171qee89.apps.googleusercontent.com",
-  driveFolderId: "15uezjenKy_BSLpMR85zdcAtnLXUyGXHo",
-  programFilename: "program.md",
-  logFilename: "log.md",
+  // Public GitHub raw URL for log.md (Claude commits adjustments here).
+  // The PWA fetches this on launch to pick up Claude's adjustments + reviews.
+  githubRawLogUrl: "https://raw.githubusercontent.com/goiaagent/training-log-pwa/main/log.md",
+
+  // Program start date — drives day/phase/week computation.
   programStartDate: "2026-05-14",
 };

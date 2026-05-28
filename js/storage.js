@@ -15,6 +15,14 @@ function writeJson(key, value) {
   localStorage.setItem(NS + key, JSON.stringify(value));
 }
 
+function readString(key) {
+  return localStorage.getItem(NS + key);
+}
+
+function writeString(key, value) {
+  localStorage.setItem(NS + key, value);
+}
+
 function remove(key) {
   localStorage.removeItem(NS + key);
 }
@@ -32,39 +40,11 @@ export function clearDraft(dateIso) {
   remove(`draft:${dateIso}`);
 }
 
-// OAuth token (volatile; lasts ~1 hour).
-export function getToken() {
-  return readJson("oauth-token", null);
+// Full log.md as a string blob — primary store.
+export function getLogText() {
+  return readString("log");
 }
 
-export function saveToken(token) {
-  writeJson("oauth-token", token);
-}
-
-export function clearToken() {
-  remove("oauth-token");
-}
-
-// Pending offline saves: list of { dateIso, markdown, attemptedAt }.
-export function getPendingSaves() {
-  return readJson("pending-saves", []);
-}
-
-export function enqueuePendingSave(entry) {
-  const list = getPendingSaves();
-  list.push(entry);
-  writeJson("pending-saves", list);
-}
-
-export function clearPendingSaves() {
-  remove("pending-saves");
-}
-
-// Cached log.md content for offline read.
-export function getCachedLog() {
-  return readJson("cached-log", null);
-}
-
-export function saveCachedLog(text, etag) {
-  writeJson("cached-log", { text, etag, cachedAt: Date.now() });
+export function saveLogText(text) {
+  writeString("log", text);
 }

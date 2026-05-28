@@ -1,31 +1,19 @@
 import { config } from "../../config.js";
-import { getToken, clearToken, getCachedLog } from "../storage.js";
-import { signIn, signOut } from "../auth.js";
+import { getLogText, saveLogText } from "../storage.js";
+import { EMPTY_LOG_TEMPLATE } from "../log-builder.js";
 
 export function renderSettings(root, state, { reload }) {
-  const token = getToken();
-  const cached = getCachedLog();
-
   root.innerHTML = `
     <section>
-      <h2>Account</h2>
-      <p>${token ? `Signed in. Token expires ${new Date(token.expires_at).toLocaleTimeString()}.` : "Signed out."}</p>
-      <button id="signin">Sign in</button>
-      <button id="signout">Sign out</button>
+      <h2>Sync with Claude</h2>
+      <p class="muted">After today's session: tap <strong>Download log.md</strong>, attach the file to your Claude chat for review. Claude commits adjustments back to GitHub; the PWA refreshes them automatically on next launch.</p>
+      <button id="export-log">📥 Download log.md</button>
+      <button id="refresh-remote">🔄 Refresh adjustments from GitHub</button>
     </section>
 
     <section>
-      <h2>Drive files</h2>
-      <p>Folder ID: <code>${esc(config.driveFolderId)}</code></p>
-      <p>Program: <code>${esc(config.programFilename)}</code></p>
-      <p>Log: <code>${esc(config.logFilename)}</code></p>
-      <p class="muted">${cached ? `Cached log at ${new Date(cached.cachedAt).toLocaleString()}` : "No cached log."}</p>
-      <button id="manual-sync">Force re-sync from Drive</button>
-    </section>
-
-    <section>
-      <h2>Backup</h2>
-      <button id="export-log">Download log.md backup</button>
+      <h2>Remote source</h2>
+      <p>GitHub raw log: <code style="font-size:.75rem;word-break:break-all">${esc(config.githubRawLogUrl)}</code></p>
     </section>
 
     <section>
@@ -40,31 +28,31 @@ export function renderSettings(root, state, { reload }) {
     </section>
 
     <section>
-      <h2>Claude project</h2>
-      <p class="muted">Open your Claude Project to run the evening review. Scheduled tasks (set up there) trigger automatically at 22:00.</p>
+      <h2>Danger</h2>
+      <button id="reset-log" style="background:#a33">Reset local log (lose all sessions)</button>
     </section>
   `;
 
-  document.getElementById("signin").addEventListener("click", async () => {
-    await signIn({ interactive: true });
-    reload();
-  });
-  document.getElementById("signout").addEventListener("click", () => {
-    signOut();
-    reload();
-  });
-  document.getElementById("manual-sync").addEventListener("click", () => {
-    reload();
-  });
   document.getElementById("export-log").addEventListener("click", () => {
-    const text = state.log.text;
+    const text = getLogText() || state.log.text;
     const blob = new Blob([text], { type: "text/markdown" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `log-backup-${new Date().toISOString().slice(0, 10)}.md`;
+    a.download = `log-${new Date().toISOString().slice(0, 10)}.md`;
     a.click();
     URL.revokeObjectURL(url);
+  });
+
+  document.getElementById("refresh-remote").addEventListener("click", () => {
+    reload();
+  });
+
+  document.getElementById("reset-log").addEventListener("click", () => {
+    if (confirm("Reset local log? All saved sessions on this device will be lost.")) {
+      saveLogText(EMPTY_LOG_TEMPLATE);
+      reload();
+    }
   });
 
   const themeSel = document.getElementById("theme");
