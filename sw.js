@@ -1,7 +1,7 @@
 // Minimal service worker: cache the app shell so the PWA opens offline.
 // GitHub raw fetches always go to network.
 
-const CACHE = "tlpwa-v6";
+const CACHE = "tlpwa-v7";
 const SHELL = [
   "./",
   "./index.html",

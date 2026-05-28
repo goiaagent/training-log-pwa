@@ -176,7 +176,7 @@ export const SESSIONS = {
         type: "bodyweight_reps_per_side",
         name: "Copenhagen Hip Dips",
         prescriptions: {
-          1: { progression: "15s hold", sets: 3, reps_left: 1, reps_right: 1 },
+          1: { progression: "dynamic", sets: 3, reps_left: 5, reps_right: 5 },
           2: { progression: "dynamic", sets: 3, reps_left: 8, reps_right: 8 },
           3: { progression: "dynamic", sets: 3, reps_left: 10, reps_right: 10 },
           4: { progression: "dynamic", sets: 2, reps_left: 6, reps_right: 6 },
