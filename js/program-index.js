@@ -336,9 +336,31 @@ export const SESSIONS = {
         },
       },
       {
-        id: "shoulder-er-pos3",
+        id: "shoulder-er-pos3-y",
         type: "shoulder_er",
-        name: "Shoulder ER — Prone Y/T/W",
+        name: "Prone Y-Raise (arms overhead in Y shape, thumbs up)",
+        prescriptions: {
+          1: { position: 3, load_kg: 2.5, sets: 3, reps: 10 },
+          2: { position: 3, load_kg: 3, sets: 3, reps: 10 },
+          3: { position: 3, load_kg: 5, sets: 3, reps: 10 },
+          4: { position: 3, load_kg: 4, sets: 2, reps: 8 },
+        },
+      },
+      {
+        id: "shoulder-er-pos3-t",
+        type: "shoulder_er",
+        name: "Prone T-Raise (arms straight out to sides, thumbs up)",
+        prescriptions: {
+          1: { position: 3, load_kg: 2.5, sets: 3, reps: 10 },
+          2: { position: 3, load_kg: 3, sets: 3, reps: 10 },
+          3: { position: 3, load_kg: 5, sets: 3, reps: 10 },
+          4: { position: 3, load_kg: 4, sets: 2, reps: 8 },
+        },
+      },
+      {
+        id: "shoulder-er-pos3-w",
+        type: "shoulder_er",
+        name: "Prone W-Raise (elbows bent, arms in W, lower-trap focus)",
         prescriptions: {
           1: { position: 3, load_kg: 2.5, sets: 3, reps: 10 },
           2: { position: 3, load_kg: 3, sets: 3, reps: 10 },
