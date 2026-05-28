@@ -86,6 +86,39 @@ describe("log-builder", () => {
     expect(oldIdx).toBeGreaterThan(newIdx);
   });
 
+  it("serializes setRows as per-set lines", () => {
+    const md = buildSessionMarkdown({
+      date: "2026-07-15",
+      dayOfWeek: "Tue",
+      name: "S",
+      phase: 1,
+      week: 1,
+      sleep_h: 7,
+      mood: 4,
+      body: "—",
+      blocks: [
+        {
+          label: "A",
+          exercise: "Back squat",
+          type: "weighted_reps",
+          entry: {
+            setRows: [
+              { reps: 5, load_kg: 80 },
+              { reps: 5, load_kg: 80 },
+              { reps: 4, load_kg: 75 },
+            ],
+            rpe: 8,
+          },
+        },
+      ],
+      globalNotes: "",
+    });
+    expect(md).toContain("- Set 1: reps: 5 · load_kg: 80");
+    expect(md).toContain("- Set 2: reps: 5 · load_kg: 80");
+    expect(md).toContain("- Set 3: reps: 4 · load_kg: 75");
+    expect(md).toContain("rpe: 8");
+  });
+
   it("EMPTY_LOG_TEMPLATE contains all required sections", () => {
     expect(EMPTY_LOG_TEMPLATE).toContain("## Active Adjustments");
     expect(EMPTY_LOG_TEMPLATE).toContain("## Watchlist");

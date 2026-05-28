@@ -2,9 +2,11 @@
 // the per-block form. log-builder consults it to know which fields to write.
 //
 // Field shape: { name, kind, required, label, unit? }
-// - kind: "number" | "integer" | "text" | "rpe" | "enum"
+// - kind: "number" | "integer" | "text" | "rpe" | "enum" | "set_table" | "attempts_list"
 // - required: true | false
 // - For enum kind, add `options: string[]`.
+// - For set_table kind, add `columns: [{name, kind, label}]`. Value is an array
+//   of row objects: [{col1: v, col2: v}, ...]. Each row represents one set.
 
 const FIELD = (name, kind, required, label, extra = {}) => ({
   name,
@@ -14,47 +16,54 @@ const FIELD = (name, kind, required, label, extra = {}) => ({
   ...extra,
 });
 
+const COL = (name, kind, label) => ({ name, kind, label });
+
 export const TYPES = {
   weighted_reps: [
-    FIELD("load_kg", "number", true, "Load (kg)"),
-    FIELD("sets", "integer", true, "Sets"),
-    FIELD("reps", "integer", true, "Reps"),
+    FIELD("setRows", "set_table", true, "Sets", {
+      columns: [COL("reps", "integer", "Reps"), COL("load_kg", "number", "Load (kg)")],
+    }),
     FIELD("rpe", "rpe", true, "RPE"),
     FIELD("notes", "text", false, "Notes"),
   ],
   weighted_time: [
-    FIELD("load_kg", "number", true, "Load (kg)"),
-    FIELD("sets", "integer", true, "Sets"),
-    FIELD("hold_seconds", "number", true, "Hold (sec)"),
+    FIELD("setRows", "set_table", true, "Sets", {
+      columns: [COL("hold_seconds", "number", "Hold (s)"), COL("load_kg", "number", "Load (kg)")],
+    }),
     FIELD("rpe", "rpe", true, "RPE"),
     FIELD("notes", "text", false, "Notes"),
   ],
   weighted_time_asymmetric: [
-    FIELD("load_kg", "number", true, "Load (kg)"),
-    FIELD("sets", "integer", true, "Sets"),
-    FIELD("hold_s_left", "number", true, "Left hold (sec)"),
-    FIELD("hold_s_right", "number", true, "Right hold (sec)"),
+    FIELD("setRows", "set_table", true, "Sets", {
+      columns: [
+        COL("hold_s_left", "number", "Left (s)"),
+        COL("hold_s_right", "number", "Right (s)"),
+        COL("load_kg", "number", "Load (kg)"),
+      ],
+    }),
     FIELD("rpe", "rpe", true, "RPE"),
     FIELD("notes", "text", false, "Notes"),
   ],
   bodyweight_time: [
     FIELD("stage", "text", true, "Stage"),
-    FIELD("sets", "integer", true, "Sets"),
-    FIELD("hold_seconds", "number", true, "Hold (sec)"),
+    FIELD("setRows", "set_table", true, "Sets", {
+      columns: [COL("hold_seconds", "number", "Hold (s)")],
+    }),
     FIELD("notes", "text", false, "Notes"),
   ],
   bodyweight_reps_per_side: [
     FIELD("progression", "text", true, "Progression"),
-    FIELD("sets", "integer", true, "Sets"),
-    FIELD("reps_left", "integer", true, "Reps left"),
-    FIELD("reps_right", "integer", true, "Reps right"),
+    FIELD("setRows", "set_table", true, "Sets", {
+      columns: [COL("reps_left", "integer", "Reps L"), COL("reps_right", "integer", "Reps R")],
+    }),
     FIELD("notes", "text", false, "Notes"),
   ],
   plyo: [
-    FIELD("sets", "integer", true, "Sets"),
-    FIELD("reps", "integer", true, "Reps"),
     FIELD("height_cm", "number", false, "Height (cm)"),
     FIELD("load_vest_kg", "number", false, "Vest (kg)"),
+    FIELD("setRows", "set_table", true, "Sets", {
+      columns: [COL("reps", "integer", "Reps")],
+    }),
     FIELD("rpe", "rpe", true, "RPE"),
     FIELD("notes", "text", false, "Notes"),
   ],
@@ -62,23 +71,22 @@ export const TYPES = {
     FIELD("variation", "enum", true, "Variation", {
       options: ["ecc-only", "assisted", "full", "loaded"],
     }),
-    FIELD("sets", "integer", true, "Sets"),
-    FIELD("reps", "integer", true, "Reps"),
     FIELD("eccentric_seconds", "number", true, "Eccentric (sec)"),
-    FIELD("load_kg", "number", false, "Load (kg)"),
+    FIELD("setRows", "set_table", true, "Sets", {
+      columns: [COL("reps", "integer", "Reps"), COL("load_kg", "number", "Load (kg)")],
+    }),
     FIELD("rpe", "rpe", true, "RPE"),
     FIELD("notes", "text", false, "Notes"),
   ],
   shoulder_er: [
     FIELD("position", "integer", true, "Position (1-4)"),
-    FIELD("load_kg", "number", true, "Load (kg)"),
-    FIELD("sets", "integer", true, "Sets"),
-    FIELD("reps", "integer", true, "Reps"),
+    FIELD("setRows", "set_table", true, "Sets", {
+      columns: [COL("reps", "integer", "Reps"), COL("load_kg", "number", "Load (kg)")],
+    }),
     FIELD("rpe", "rpe", true, "RPE"),
     FIELD("notes", "text", false, "Notes"),
   ],
   climbing_project: [
-    // attempts is a list rendered specially; not a flat field
     FIELD("attempts", "attempts_list", true, "Attempts"),
     FIELD("session_duration_min", "integer", true, "Duration (min)"),
     FIELD("overall_notes", "text", false, "Notes"),
@@ -134,6 +142,21 @@ export function validateEntry(type, entry) {
   for (const f of fields) {
     if (!f.required) continue;
     const v = entry[f.name];
+    if (f.kind === "set_table") {
+      if (!Array.isArray(v) || v.length === 0) {
+        missing.push(f.name);
+        continue;
+      }
+      // Each row must have all column values.
+      for (let i = 0; i < v.length; i++) {
+        for (const col of f.columns) {
+          if (v[i][col.name] === undefined || v[i][col.name] === "" || v[i][col.name] === null) {
+            missing.push(`${f.name}[${i + 1}].${col.name}`);
+          }
+        }
+      }
+      continue;
+    }
     if (v === undefined || v === null || v === "") missing.push(f.name);
   }
   return { ok: missing.length === 0, missing };

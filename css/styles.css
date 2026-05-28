@@ -117,3 +117,20 @@ details.block summary::-webkit-details-marker { display: none; }
 .add-attempt { background: var(--input-bg); border: 1px solid var(--border); color: var(--fg); padding: 8px; border-radius: 6px; }
 
 code { background: var(--input-bg); padding: 2px 4px; border-radius: 4px; font-size: 12px; }
+
+/* Set tables */
+.set-table-field { margin: 8px 0; }
+.set-table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.set-table-header .field-label { font-weight: 600; font-size: 0.9rem; }
+.add-set-row { background: var(--input-bg); color: var(--accent); border: 1px solid var(--border); padding: 4px 10px; border-radius: 4px; font-size: 0.85rem; }
+.set-rows { display: flex; flex-direction: column; gap: 6px; }
+.set-row { display: flex; align-items: center; gap: 6px; }
+.set-row .set-row-label { font-size: 0.8rem; color: var(--muted); min-width: 44px; }
+.set-row input { flex: 1; min-width: 0; padding: 8px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 4px; color: var(--fg); font-size: 0.95rem; }
+.set-row button[data-action="remove-set"] { background: transparent; color: var(--muted); border: 1px solid var(--border); width: 32px; height: 32px; border-radius: 4px; font-size: 1.1rem; }
+
+/* Log view */
+.set-list { list-style: none; padding-left: 0; margin: 4px 0; font-size: 0.85rem; }
+.set-list li { padding: 2px 0; }
+.set-list .set-num { display: inline-block; min-width: 28px; font-weight: 600; color: var(--muted); }
+.exercise-link { color: var(--accent); text-decoration: none; border-bottom: 1px dotted var(--accent); }

@@ -1,7 +1,7 @@
 // Minimal service worker: cache the app shell so the PWA opens offline.
 // GitHub raw fetches always go to network.
 
-const CACHE = "tlpwa-v3";
+const CACHE = "tlpwa-v4";
 const SHELL = [
   "./",
   "./index.html",
@@ -21,6 +21,7 @@ const SHELL = [
   "./js/views/reviews.js",
   "./js/views/settings.js",
   "./js/views/edit-recent.js",
+  "./js/views/graph.js",
 ];
 
 self.addEventListener("install", (e) => {

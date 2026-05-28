@@ -42,10 +42,44 @@ export function buildSessionMarkdown(session) {
 function renderBlock(block) {
   const { label, exercise, type, entry } = block;
   const head = `**Block ${label} — ${exercise}** _(${type})_`;
-  const fieldOrder = Object.keys(entry).filter((k) => k !== "notes" && entry[k] !== undefined && entry[k] !== "");
-  const fields = fieldOrder.map((k) => `${k}: ${entry[k]}`).join(" · ");
-  const lines = [head, `- ${fields}`];
-  if (entry.notes && entry.notes.trim()) lines.push(`- Notes: ${entry.notes.trim()}`);
+  const lines = [head];
+
+  // setRows render as separate "- Set N: ..." lines.
+  if (Array.isArray(entry.setRows) && entry.setRows.length) {
+    entry.setRows.forEach((row, i) => {
+      const parts = Object.entries(row)
+        .filter(([, v]) => v !== undefined && v !== "" && v !== null)
+        .map(([k, v]) => `${k}: ${v}`)
+        .join(" · ");
+      lines.push(`- Set ${i + 1}: ${parts}`);
+    });
+  }
+
+  // Other scalar fields on a single trailing line.
+  const scalars = Object.entries(entry)
+    .filter(
+      ([k, v]) =>
+        k !== "setRows" &&
+        k !== "notes" &&
+        k !== "attempts" &&
+        v !== undefined &&
+        v !== "" &&
+        v !== null,
+    )
+    .map(([k, v]) => `${k}: ${v}`)
+    .join(" · ");
+  if (scalars) lines.push(`- ${scalars}`);
+
+  if (entry.notes && String(entry.notes).trim()) lines.push(`- Notes: ${String(entry.notes).trim()}`);
+  if (Array.isArray(entry.attempts) && entry.attempts.length) {
+    entry.attempts.forEach((a, i) => {
+      const parts = Object.entries(a)
+        .filter(([, v]) => v !== undefined && v !== "" && v !== null)
+        .map(([k, v]) => `${k}: ${v}`)
+        .join(" · ");
+      lines.push(`- Attempt ${i + 1}: ${parts}`);
+    });
+  }
   lines.push("");
   return lines.join("\n");
 }

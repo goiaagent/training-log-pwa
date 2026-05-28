@@ -101,6 +101,33 @@ describe("log-parser", () => {
     expect(parsed.weeklyReviewsRaw).toContain("### Week 10");
   });
 
+  it("parses setRows from per-set lines", () => {
+    const text = `# Log
+## Active Adjustments
+## Watchlist
+## Sessions
+### 2026-07-15 — Tue — S
+**Phase:** 1 · **Week:** 1 · **Sleep prev night:** 7h · **Mood:** 4/5 · **Body:** —
+
+**Block A — Back squat** _(weighted_reps)_
+- Set 1: reps: 5 · load_kg: 80
+- Set 2: reps: 5 · load_kg: 80
+- Set 3: reps: 4 · load_kg: 75
+- rpe: 8
+- Notes: hard 3rd set
+
+## Daily Reviews
+## Weekly Reviews
+`;
+    const parsed = parseLog(text);
+    const block = parsed.sessions[0].blocks[0];
+    expect(block.entry.setRows).toHaveLength(3);
+    expect(block.entry.setRows[0]).toEqual({ reps: 5, load_kg: 80 });
+    expect(block.entry.setRows[2]).toEqual({ reps: 4, load_kg: 75 });
+    expect(block.entry.rpe).toBe(8);
+    expect(block.entry.notes).toBe("hard 3rd set");
+  });
+
   it("handles an empty log gracefully", () => {
     const empty = `# Hybrid Athlete Training Log
 

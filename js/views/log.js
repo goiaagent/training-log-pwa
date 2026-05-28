@@ -21,9 +21,9 @@ export function renderLog(root, state) {
             <ul class="history-blocks">
               ${s.blocks
                 .map(
-                  (b) => `<li><strong>${esc(b.label)}. ${esc(b.exercise)}</strong>
-                  <span class="muted">_(${esc(b.type)})_</span><br>
-                  <code>${esc(stringifyEntry(b.entry))}</code>
+                  (b) => `<li><strong>${esc(b.label)}. <a class="exercise-link" href="#/graph?exercise=${encodeURIComponent(b.exercise)}">${esc(b.exercise)}</a></strong>
+                  <span class="muted">_(${esc(b.type)})_</span>
+                  ${renderEntry(b.entry)}
                   ${b.entry.notes ? `<div class="block-notes">${esc(b.entry.notes)}</div>` : ""}
                   </li>`,
                 )
@@ -43,9 +43,32 @@ function isWithin24h(dateIso, now) {
   return now - d < 24 * 3600 * 1000;
 }
 
-function stringifyEntry(entry) {
-  return Object.entries(entry)
-    .filter(([k]) => k !== "notes")
+function renderEntry(entry) {
+  const out = [];
+  if (Array.isArray(entry.setRows) && entry.setRows.length) {
+    out.push(
+      `<ul class="set-list">${entry.setRows
+        .map((r, i) => `<li><span class="set-num">${i + 1}</span> ${esc(stringifyRow(r))}</li>`)
+        .join("")}</ul>`,
+    );
+  }
+  const scalars = Object.entries(entry)
+    .filter(([k, v]) => k !== "setRows" && k !== "notes" && k !== "attempts" && v !== undefined && v !== "" && !Array.isArray(v))
+    .map(([k, v]) => `${k}: ${v}`)
+    .join(" · ");
+  if (scalars) out.push(`<code>${esc(scalars)}</code>`);
+  if (Array.isArray(entry.attempts) && entry.attempts.length) {
+    out.push(
+      `<ul class="set-list">${entry.attempts
+        .map((a, i) => `<li><span class="set-num">A${i + 1}</span> ${esc(stringifyRow(a))}</li>`)
+        .join("")}</ul>`,
+    );
+  }
+  return out.join("");
+}
+
+function stringifyRow(row) {
+  return Object.entries(row)
     .map(([k, v]) => `${k}: ${v}`)
     .join(" · ");
 }

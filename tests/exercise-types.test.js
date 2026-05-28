@@ -22,38 +22,54 @@ describe("exercise-types", () => {
     ]);
   });
 
-  it("returns field metadata for weighted_reps", () => {
+  it("weighted_reps uses a set_table field", () => {
     const fields = fieldsFor("weighted_reps");
-    const names = fields.map((f) => f.name);
-    expect(names).toEqual(["load_kg", "sets", "reps", "rpe", "notes"]);
+    const setRows = fields.find((f) => f.name === "setRows");
+    expect(setRows).toBeDefined();
+    expect(setRows.kind).toBe("set_table");
+    expect(setRows.columns.map((c) => c.name).sort()).toEqual(["load_kg", "reps"]);
   });
 
-  it("returns field metadata for weighted_time_asymmetric", () => {
+  it("weighted_time_asymmetric set_table has both sides", () => {
     const fields = fieldsFor("weighted_time_asymmetric");
-    const names = fields.map((f) => f.name);
-    expect(names).toContain("hold_s_left");
-    expect(names).toContain("hold_s_right");
+    const setRows = fields.find((f) => f.name === "setRows");
+    const cols = setRows.columns.map((c) => c.name);
+    expect(cols).toContain("hold_s_left");
+    expect(cols).toContain("hold_s_right");
   });
 
   it("validateEntry passes for a complete weighted_reps entry", () => {
     const result = validateEntry("weighted_reps", {
-      load_kg: 25,
-      sets: 4,
-      reps: 7,
+      setRows: [
+        { reps: 7, load_kg: 25 },
+        { reps: 6, load_kg: 25 },
+      ],
       rpe: 8,
       notes: "clean",
     });
     expect(result.ok).toBe(true);
   });
 
-  it("validateEntry fails when required field missing", () => {
-    const result = validateEntry("weighted_reps", { sets: 4, reps: 7, rpe: 8 });
+  it("validateEntry fails when set_table empty", () => {
+    const result = validateEntry("weighted_reps", { setRows: [], rpe: 8 });
     expect(result.ok).toBe(false);
-    expect(result.missing).toContain("load_kg");
+    expect(result.missing).toContain("setRows");
   });
 
-  it("validateEntry treats optional fields as optional", () => {
-    const result = validateEntry("plyo", { sets: 3, reps: 8, rpe: 7 });
-    expect(result.ok).toBe(true); // height_cm and load_vest_kg are optional
+  it("validateEntry fails when a set row is missing a column", () => {
+    const result = validateEntry("weighted_reps", {
+      setRows: [{ reps: 5 }],
+      rpe: 7,
+    });
+    expect(result.ok).toBe(false);
+    expect(result.missing.some((m) => m.includes("load_kg"))).toBe(true);
+  });
+
+  it("plyo height_cm and load_vest_kg are optional block-level fields", () => {
+    const result = validateEntry("plyo", {
+      setRows: [{ reps: 8 }, { reps: 6 }],
+      rpe: 7,
+    });
+    expect(result.ok).toBe(true);
   });
 });

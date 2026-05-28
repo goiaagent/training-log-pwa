@@ -67,6 +67,25 @@ function renderEntryFields(block) {
   return fields
     .filter((f) => f.kind !== "attempts_list") // attempts editing skipped for v1
     .map((f) => {
+      if (f.kind === "set_table") {
+        const rows = Array.isArray(block.entry[f.name]) ? block.entry[f.name] : [];
+        return `<div class="edit-set-table" data-field-name="${esc(f.name)}">
+          <strong>${esc(f.label)}</strong>
+          ${rows
+            .map(
+              (row, i) => `<div class="set-row edit-set-row" data-row-idx="${i}">
+              <span class="set-row-label">Set ${i + 1}</span>
+              ${f.columns
+                .map(
+                  (c) =>
+                    `<input type="${c.kind === "integer" || c.kind === "number" ? "number" : "text"}" data-col="${esc(c.name)}" value="${row[c.name] !== undefined ? esc(String(row[c.name])) : ""}" placeholder="${esc(c.label)}">`,
+                )
+                .join("")}
+            </div>`,
+            )
+            .join("")}
+        </div>`;
+      }
       const v = block.entry[f.name];
       return `<label>${f.label}
         <input type="${f.kind === "integer" || f.kind === "number" || f.kind === "rpe" ? "number" : "text"}"
@@ -84,11 +103,28 @@ function buildEditedSession(root, recent) {
   };
   const blocks = recent.blocks.map((b, idx) => {
     const wrap = root.querySelector(`[data-edit-block-idx="${idx}"]`);
-    const entry = {};
-    wrap.querySelectorAll("input").forEach((el) => {
+    const entry = { ...b.entry };
+
+    // Scalar inputs (have a name attribute).
+    wrap.querySelectorAll("input[name]").forEach((el) => {
       if (el.value !== "") entry[el.name] = isNumeric(el) ? Number(el.value) : el.value;
     });
-    return { label: b.label, exercise: b.exercise, type: b.type, entry: { ...b.entry, ...entry } };
+
+    // Set tables: rebuild each from the edited rows.
+    wrap.querySelectorAll(".edit-set-table").forEach((table) => {
+      const fieldName = table.dataset.fieldName;
+      const rows = [];
+      table.querySelectorAll(".edit-set-row").forEach((row) => {
+        const r = {};
+        row.querySelectorAll("[data-col]").forEach((el) => {
+          if (el.value !== "") r[el.dataset.col] = el.type === "number" ? Number(el.value) : el.value;
+        });
+        if (Object.keys(r).length) rows.push(r);
+      });
+      entry[fieldName] = rows;
+    });
+
+    return { label: b.label, exercise: b.exercise, type: b.type, entry };
   });
   return {
     date: recent.date,

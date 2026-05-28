@@ -126,17 +126,29 @@ function parseSessions(lines) {
         type: blockHeader[3].trim(),
         fieldsLine: "",
         notes: "",
+        setRows: [],
+        attempts: [],
       };
       continue;
     }
 
     if (blockBuffer) {
-      const isFieldsLine = /^-\s/.test(line) && !blockBuffer.fieldsLine;
+      const setLine = line.match(/^-\s*Set\s+(\d+):\s*(.+)$/i);
+      if (setLine) {
+        blockBuffer.setRows[Number(setLine[1]) - 1] = parseKvParts(setLine[2]);
+        continue;
+      }
+      const attemptLine = line.match(/^-\s*Attempt\s+(\d+):\s*(.+)$/i);
+      if (attemptLine) {
+        blockBuffer.attempts[Number(attemptLine[1]) - 1] = parseKvParts(attemptLine[2]);
+        continue;
+      }
       const isNotesLine = /^-\s*Notes:/i.test(line);
       if (isNotesLine) {
         blockBuffer.notes = line.replace(/^-\s*Notes:\s*/i, "").trim();
         continue;
       }
+      const isFieldsLine = /^-\s/.test(line) && !blockBuffer.fieldsLine;
       if (isFieldsLine) {
         blockBuffer.fieldsLine = line.replace(/^-\s*/, "").trim();
         continue;
@@ -154,18 +166,22 @@ function parseSessions(lines) {
 }
 
 function finalizeBlock(b) {
+  const entry = parseKvParts(b.fieldsLine);
+  if (b.setRows.length) entry.setRows = b.setRows.filter(Boolean);
+  if (b.attempts.length) entry.attempts = b.attempts.filter(Boolean);
+  if (b.notes) entry.notes = b.notes;
   return {
     label: b.label,
     exercise: b.exercise,
     type: b.type,
-    entry: parseFieldsLine(b.fieldsLine, b.notes),
+    entry,
   };
 }
 
 // "load_kg: 35 · sets: 4 · hold_seconds: 8 · rpe: 9" → { load_kg: 35, sets: 4, ... }
-function parseFieldsLine(line, notes) {
+function parseKvParts(line) {
   const out = {};
-  if (!line) return notes ? { notes } : out;
+  if (!line) return out;
   for (const part of line.split("·")) {
     const m = part.match(/^\s*([\w_]+)\s*:\s*(.+?)\s*$/);
     if (!m) continue;
@@ -173,6 +189,5 @@ function parseFieldsLine(line, notes) {
     const num = Number(valueRaw);
     out[name] = Number.isFinite(num) && /^[\d.]+$/.test(valueRaw) ? num : valueRaw;
   }
-  if (notes) out.notes = notes;
   return out;
 }

@@ -1,4 +1,4 @@
-import { getSession, prescribedForBlock } from "../program-index.js";
+import { getSession, prescribedForBlock, SESSIONS } from "../program-index.js";
 import { fieldsFor, validateEntry } from "../exercise-types.js";
 import { resolvePrescribed, isAdjustmentActive } from "../prescribed.js";
 import { buildSessionMarkdown, insertSession } from "../log-builder.js";
@@ -9,14 +9,10 @@ export function renderToday(root, state, { reload }) {
   const dateIso = today.toISOString().slice(0, 10);
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
-  if (!state.day?.sessionKeys?.length) {
-    root.innerHTML = `<p class="empty">No session today.</p>`;
-    return;
-  }
-
-  // For phone simplicity: when there are multiple sessions on a day (Mon/Wed have AM+PM),
-  // show them stacked, each independently saveable.
-  const sessions = state.day.sessionKeys.map((key) => getSession(key));
+  // Active session keys = user override (from picker) or today's defaults.
+  const defaultKeys = state.day?.sessionKeys || [];
+  const activeKeys = state.activeSessionKeys ?? defaultKeys;
+  const sessions = activeKeys.map((key) => getSession(key)).filter(Boolean);
 
   // Adjustments + watchlist banners
   const activeAdjustments = state.log.parsed.adjustments.filter((a) => isAdjustmentActive(a, today));
@@ -24,14 +20,57 @@ export function renderToday(root, state, { reload }) {
 
   root.innerHTML = `
     ${renderBanners(activeAdjustments, watchlist)}
-    ${renderPreSession(dateIso)}
-    ${sessions
-      .map((sess, i) => renderSession(sess, state.day, state.log.parsed.adjustments, today, dateIso, i))
-      .join("")}
+    ${renderSessionPicker(activeKeys, defaultKeys)}
+    ${sessions.length ? renderPreSession(dateIso) : ""}
+    ${sessions.length
+      ? sessions.map((sess, i) => renderSession(sess, state.day, state.log.parsed.adjustments, today, dateIso, i)).join("")
+      : `<p class="empty" style="text-align:center;padding:2rem;color:var(--text-secondary)">Rest day — pick a session above to log a workout.</p>`}
   `;
 
+  // Wire picker
+  const picker = root.querySelector("#session-picker");
+  if (picker) {
+    picker.addEventListener("change", () => {
+      const val = picker.value;
+      if (val === "__default__") {
+        state.activeSessionKeys = null;
+      } else if (val === "__rest__") {
+        state.activeSessionKeys = [];
+      } else {
+        state.activeSessionKeys = [val];
+      }
+      renderToday(root, state, { reload });
+    });
+  }
+
   // Restore drafts and wire input listeners
-  wireForm(root, state, dateIso, sessions, reload);
+  if (sessions.length) wireForm(root, state, dateIso, sessions, reload);
+}
+
+function renderSessionPicker(activeKeys, defaultKeys) {
+  const allKeys = Object.keys(SESSIONS);
+  const isDefault =
+    activeKeys.length === defaultKeys.length &&
+    activeKeys.every((k, i) => k === defaultKeys[i]);
+  const isRest = activeKeys.length === 0;
+  const currentValue = isDefault ? "__default__" : isRest ? "__rest__" : activeKeys[0];
+  const defaultLabel = defaultKeys.length
+    ? defaultKeys.map((k) => SESSIONS[k]?.name || k).join(" + ")
+    : "Rest";
+  return `
+    <div class="session-picker-wrap" style="padding:.75rem;background:var(--surface);border-radius:.5rem;margin-bottom:1rem">
+      <label style="display:flex;flex-direction:column;gap:.25rem">
+        <span style="font-size:.85rem;color:var(--text-secondary)">Workout</span>
+        <select id="session-picker" style="padding:.5rem;font-size:1rem">
+          <option value="__default__">Today's session — ${esc(defaultLabel)}</option>
+          ${allKeys
+            .map((k) => `<option value="${esc(k)}" ${k === currentValue ? "selected" : ""}>${esc(SESSIONS[k].name)}</option>`)
+            .join("")}
+          <option value="__rest__" ${isRest ? "selected" : ""}>Rest (no workout)</option>
+        </select>
+      </label>
+    </div>
+  `;
 }
 
 function renderBanners(adjustments, watchlist) {
@@ -136,6 +175,16 @@ function renderField(field, prescribedValue) {
       <button type="button" class="add-attempt">+ Add attempt</button>
     </div>`;
   }
+  if (field.kind === "set_table") {
+    const placeholders = prescribedValue && typeof prescribedValue === "object" ? prescribedValue : {};
+    return `<div class="field set-table-field" data-field="set-table" data-field-name="${esc(name)}">
+      <div class="set-table-header">
+        <span class="field-label">${label}</span>
+        <button type="button" class="add-set-row">+ Add set</button>
+      </div>
+      <div class="set-rows" data-columns='${esc(JSON.stringify(field.columns))}'></div>
+    </div>`;
+  }
   const inputType = field.kind === "integer" || field.kind === "number" ? "number" : "text";
   const step = field.kind === "number" ? "0.5" : "1";
   return `<label class="field">${label}
@@ -168,6 +217,20 @@ function wireForm(root, state, dateIso, sessions, reload) {
     });
   });
 
+  // Set tables — seed with one row, wire add-row
+  root.querySelectorAll(".set-table-field").forEach((wrap) => {
+    const rowsContainer = wrap.querySelector(".set-rows");
+    if (rowsContainer.children.length === 0) addSetRow(rowsContainer);
+  });
+  root.querySelectorAll(".add-set-row").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const wrap = btn.closest(".set-table-field");
+      addSetRow(wrap.querySelector(".set-rows"));
+      persistDraft();
+      bindAllInputs();
+    });
+  });
+
   // Attempts list (climbing_project)
   root.querySelectorAll(".add-attempt").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -193,6 +256,18 @@ function wireForm(root, state, dateIso, sessions, reload) {
   });
 
   root.addEventListener("click", (e) => {
+    if (e.target.dataset.action === "remove-set") {
+      e.target.closest(".set-row").remove();
+      // Renumber visible set labels
+      const container = e.target.closest(".set-rows");
+      if (container) {
+        container.querySelectorAll(".set-row").forEach((r, i) => {
+          const label = r.querySelector(".set-row-label");
+          if (label) label.textContent = `Set ${i + 1}`;
+        });
+      }
+      persistDraft();
+    }
     if (e.target.dataset.action === "remove-attempt") {
       e.target.closest(".attempt-row").remove();
       persistDraft();
@@ -214,10 +289,15 @@ function wireForm(root, state, dateIso, sessions, reload) {
     }
   });
 
-  // Persist any input change
-  root.querySelectorAll("input, select").forEach((el) => {
-    el.addEventListener("input", persistDraft);
-  });
+  // Persist any input change. Re-bind whenever rows are added dynamically.
+  function bindAllInputs() {
+    root.querySelectorAll("input, select").forEach((el) => {
+      if (el.dataset.bound) return;
+      el.dataset.bound = "1";
+      el.addEventListener("input", persistDraft);
+    });
+  }
+  bindAllInputs();
 
   // Save buttons
   root.querySelectorAll(".save-btn").forEach((btn) => {
@@ -241,6 +321,31 @@ function wireForm(root, state, dateIso, sessions, reload) {
   function persistDraft() {
     saveDraft(dateIso, extractDraft(root));
   }
+}
+
+function addSetRow(container, values = {}) {
+  let columns;
+  try {
+    columns = JSON.parse(container.dataset.columns);
+  } catch {
+    columns = [];
+  }
+  const idx = container.children.length;
+  const row = document.createElement("div");
+  row.className = "set-row";
+  row.innerHTML = `
+    <span class="set-row-label">Set ${idx + 1}</span>
+    ${columns
+      .map((c) => {
+        const v = values[c.name] !== undefined ? esc(String(values[c.name])) : "";
+        const isNum = c.kind === "integer" || c.kind === "number";
+        const step = c.kind === "number" ? "0.5" : "1";
+        return `<input type="${isNum ? "number" : "text"}" step="${step}" inputmode="${isNum ? "decimal" : "text"}" placeholder="${esc(c.label)}" data-col="${esc(c.name)}" value="${v}">`;
+      })
+      .join("")}
+    <button type="button" data-action="remove-set" aria-label="Remove">×</button>
+  `;
+  container.appendChild(row);
 }
 
 function extractDraft(root) {
@@ -275,6 +380,21 @@ function extractDraft(root) {
         if (Object.keys(a).length) attempts.push(a);
       });
       if (attempts.length) entry.attempts = attempts;
+
+      // set tables
+      b.querySelectorAll(".set-table-field").forEach((wrap) => {
+        const name = wrap.dataset.fieldName;
+        const rows = [];
+        wrap.querySelectorAll(".set-row").forEach((row) => {
+          const r = {};
+          row.querySelectorAll("[data-col]").forEach((el) => {
+            if (el.value !== "") r[el.dataset.col] = el.type === "number" ? Number(el.value) : el.value;
+          });
+          if (Object.keys(r).length) rows.push(r);
+        });
+        if (rows.length) entry[name] = rows;
+      });
+
       sess.blocks[bIdx] = { entry, skipped };
     });
     draft.sessions[sIdx] = sess;
@@ -314,6 +434,16 @@ function hydrateDraft(root, draft) {
       }
       for (const [k, v] of Object.entries(b.entry || {})) {
         if (k === "attempts" && Array.isArray(v)) continue; // attempts hydration skipped for simplicity
+        // Hydrate set tables.
+        if (Array.isArray(v) && v.length && typeof v[0] === "object") {
+          const wrap = blockEl.querySelector(`.set-table-field[data-field-name="${k}"]`);
+          if (wrap) {
+            const container = wrap.querySelector(".set-rows");
+            container.innerHTML = "";
+            v.forEach((rowVals) => addSetRow(container, rowVals));
+          }
+          continue;
+        }
         const input = blockEl.querySelector(`input[name="${k}"], select[name="${k}"]`);
         if (input) input.value = v;
         const group = blockEl.querySelector(`.rpe-buttons[data-rpe-name="${k}"]`);
@@ -386,7 +516,17 @@ function coerceEntryTypes(type, entry) {
     if (v === undefined || v === "") continue;
     if (f.kind === "integer") out[f.name] = parseInt(v, 10);
     else if (f.kind === "number" || f.kind === "rpe") out[f.name] = Number(v);
-    else out[f.name] = v;
+    else if (f.kind === "set_table" && Array.isArray(v)) {
+      out[f.name] = v.map((row) => {
+        const r = {};
+        for (const col of f.columns) {
+          const cv = row[col.name];
+          if (cv === undefined || cv === "") continue;
+          r[col.name] = col.kind === "integer" ? parseInt(cv, 10) : col.kind === "number" ? Number(cv) : cv;
+        }
+        return r;
+      });
+    } else out[f.name] = v;
   }
   if (entry.attempts) out.attempts = entry.attempts;
   return out;

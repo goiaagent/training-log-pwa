@@ -4,6 +4,7 @@ import { renderAdjust } from "./views/adjust.js";
 import { renderReviews } from "./views/reviews.js";
 import { renderSettings } from "./views/settings.js";
 import { renderEditRecent } from "./views/edit-recent.js";
+import { renderGraph } from "./views/graph.js";
 import { parseLog } from "./log-parser.js";
 import { programDayInfo } from "./program-index.js";
 import { getLogText, saveLogText } from "./storage.js";
@@ -48,7 +49,8 @@ function setStateFromText(text) {
 
 function route() {
   const hash = location.hash || "#/today";
-  const view = hash.replace("#/", "");
+  // Strip query string for view-name match.
+  const view = hash.replace("#/", "").split("?")[0];
   const renderers = {
     today: renderToday,
     log: renderLog,
@@ -56,6 +58,7 @@ function route() {
     reviews: renderReviews,
     settings: renderSettings,
     "edit-recent": renderEditRecent,
+    graph: renderGraph,
   };
   const fn = renderers[view] || renderToday;
   setActiveTab(view);
