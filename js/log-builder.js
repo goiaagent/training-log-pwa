@@ -2,7 +2,7 @@
 
 export const EMPTY_LOG_TEMPLATE = `# Hybrid Athlete Training Log
 
-**Program start:** 2026-05-14
+**Program start:** 2026-05-28
 **Last updated:** (uninitialized)
 
 ## Active Adjustments

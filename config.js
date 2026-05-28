@@ -4,5 +4,5 @@ export const config = {
   githubRawLogUrl: "https://raw.githubusercontent.com/goiaagent/training-log-pwa/main/log.md",
 
   // Program start date — drives day/phase/week computation.
-  programStartDate: "2026-05-14",
+  programStartDate: "2026-05-28",
 };
