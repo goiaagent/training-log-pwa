@@ -256,10 +256,15 @@ function wireForm(root, state, dateIso, sessions, reload) {
   });
 
   root.addEventListener("click", (e) => {
-    if (e.target.dataset.action === "remove-set") {
-      e.target.closest(".set-row").remove();
-      // Renumber visible set labels
-      const container = e.target.closest(".set-rows");
+    // Resolve to the nearest element carrying a data-action, in case the tap
+    // landed on a child (icon/text node) of the button.
+    const actionEl = e.target.closest("[data-action]");
+    if (!actionEl) return;
+    const action = actionEl.dataset.action;
+
+    if (action === "remove-set") {
+      actionEl.closest(".set-row").remove();
+      const container = actionEl.closest(".set-rows");
       if (container) {
         container.querySelectorAll(".set-row").forEach((r, i) => {
           const label = r.querySelector(".set-row-label");
@@ -267,25 +272,32 @@ function wireForm(root, state, dateIso, sessions, reload) {
         });
       }
       persistDraft();
+      return;
     }
-    if (e.target.dataset.action === "remove-attempt") {
-      e.target.closest(".attempt-row").remove();
+    if (action === "remove-attempt") {
+      actionEl.closest(".attempt-row").remove();
       persistDraft();
+      return;
     }
-    if (e.target.dataset.action === "skip") {
-      const block = e.target.closest(".block");
+    if (action === "skip") {
+      const block = actionEl.closest(".block");
       block.dataset.skipped = "true";
       block.querySelectorAll("input, select").forEach((el) => (el.disabled = true));
-      e.target.textContent = "Skipped — tap to unskip";
-      e.target.dataset.action = "unskip";
+      block.classList.add("is-skipped");
+      actionEl.textContent = "✓ Skipped — tap to unskip";
+      actionEl.dataset.action = "unskip";
       persistDraft();
-    } else if (e.target.dataset.action === "unskip") {
-      const block = e.target.closest(".block");
+      return;
+    }
+    if (action === "unskip") {
+      const block = actionEl.closest(".block");
       delete block.dataset.skipped;
       block.querySelectorAll("input, select").forEach((el) => (el.disabled = false));
-      e.target.textContent = "Mark skipped";
-      e.target.dataset.action = "skip";
+      block.classList.remove("is-skipped");
+      actionEl.textContent = "Mark skipped";
+      actionEl.dataset.action = "skip";
       persistDraft();
+      return;
     }
   });
 
