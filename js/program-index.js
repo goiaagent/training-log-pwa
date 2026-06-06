@@ -367,6 +367,25 @@ export const SESSIONS = {
     ],
   },
 
+  // Standalone session, not bound to a day-of-week. Available via the picker
+  // whenever you want to log a Hyrox maintenance workout.
+  hyrox: {
+    name: "Hyrox Maintenance",
+    duration_min: 25,
+    blocks: [
+      {
+        id: "hyrox-maintenance",
+        type: "running_hyrox",
+        name: "Hyrox maintenance",
+        prescriptions: {
+          1: { format: "A" },
+          2: { format: "A" },
+          3: { format: "B" },
+          4: { format: "A" },
+        },
+      },
+    ],
+  },
 };
 
 // Day-of-week (0=Sun..6=Sat) → array of session keys for that day.

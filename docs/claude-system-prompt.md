@@ -102,9 +102,9 @@ with the same write discipline as daily.
    `lateral-raises`, `db-rows`, `nordic-curls`, `bulgarian-split-squat`,
    `box-jumps`, `depth-jumps`, `single-leg-bounds`, `copenhagen`,
    `front-lever`, `oapu`, `pinch-block`, `pinch-block-balance`,
-   `shoulder-er-pos1`, `shoulder-er-pos2`, `shoulder-er-pos3`, `shoulder-er-pos4`,
+   `shoulder-er-db`,
    `reverse-wrist-curls`, `kilterboard-4x4`, `arc-block`, `project-session`,
-   `z2-run`, `hyrox-maintenance`, `mobility`, `core-dragon-flag`,
+   `z2-run`, `hyrox-maintenance`, `core-dragon-flag`, `core-t2b`,
    `explosive-pushups`.
 5. **Adjustment field names must match the exercise type's field names** as
    defined in `js/exercise-types.js`. E.g., for `weighted_reps` the fields are

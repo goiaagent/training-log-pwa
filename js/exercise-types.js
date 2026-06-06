@@ -122,6 +122,12 @@ export const TYPES = {
     FIELD("avg_hr", "integer", false, "Avg HR"),
     FIELD("notes", "text", false, "Notes"),
   ],
+  running_hyrox: [
+    FIELD("format", "enum", true, "Format", { options: ["A", "B"] }),
+    FIELD("total_time_min_sec", "text", true, "Total time (mm:ss)"),
+    FIELD("station_splits", "text", false, "Station splits"),
+    FIELD("notes", "text", false, "Notes"),
+  ],
 };
 
 export function fieldsFor(type) {

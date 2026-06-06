@@ -10,6 +10,7 @@ describe("exercise-types", () => {
       "climbing_kilterboard",
       "climbing_project",
       "plyo",
+      "running_hyrox",
       "running_time_trial",
       "running_z2",
       "shoulder_er",
