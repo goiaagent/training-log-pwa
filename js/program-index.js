@@ -349,24 +349,6 @@ export const SESSIONS = {
     ],
   },
 
-  friday: {
-    name: "REST / Active Recovery",
-    duration_min: 15,
-    blocks: [
-      {
-        id: "mobility",
-        type: "mobility",
-        name: "Mobility flow (optional)",
-        prescriptions: {
-          1: { duration_min: 15 },
-          2: { duration_min: 15 },
-          3: { duration_min: 15 },
-          4: { duration_min: 15 },
-        },
-      },
-    ],
-  },
-
   saturday: {
     name: "Hard Sport Climbing (Project)",
     duration_min: 200,
@@ -385,34 +367,17 @@ export const SESSIONS = {
     ],
   },
 
-  sunday: {
-    name: "REST (optional Hyrox bi-weekly)",
-    duration_min: 25,
-    blocks: [
-      {
-        id: "hyrox-maintenance",
-        type: "running_hyrox",
-        name: "Hyrox maintenance (optional)",
-        prescriptions: {
-          1: { format: "A" },
-          2: { format: "A" },
-          3: { format: "B" },
-          4: { format: "A" },
-        },
-      },
-    ],
-  },
 };
 
 // Day-of-week (0=Sun..6=Sat) → array of session keys for that day.
 // Some days have both AM and PM (Mon, Wed).
 const DAY_OF_WEEK_TO_SESSIONS = {
-  0: ["sunday"],
+  0: [],
   1: ["monday_am", "monday_pm"],
   2: ["tuesday"],
   3: ["wednesday_am", "wednesday_pm"],
   4: ["thursday"],
-  5: ["friday"],
+  5: [],
   6: ["saturday"],
 };
 

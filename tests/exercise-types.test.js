@@ -2,16 +2,14 @@ import { describe, it, expect } from "vitest";
 import { TYPES, fieldsFor, validateEntry } from "../js/exercise-types.js";
 
 describe("exercise-types", () => {
-  it("exposes all 15 type identifiers", () => {
+  it("exposes all type identifiers used by the program", () => {
     expect(Object.keys(TYPES).sort()).toEqual([
       "bodyweight_reps_per_side",
       "bodyweight_time",
       "climbing_arc",
       "climbing_kilterboard",
       "climbing_project",
-      "mobility",
       "plyo",
-      "running_hyrox",
       "running_time_trial",
       "running_z2",
       "shoulder_er",
