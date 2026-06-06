@@ -307,10 +307,10 @@ export const SESSIONS = {
         type: "climbing_kilterboard",
         name: "Kilterboard 4×4",
         prescriptions: {
-          1: { angle_deg: 25, problems_per_block: 6, blocks: 3, grade_range: "7a-7b", rest_min_between_blocks: 10 },
-          2: { angle_deg: 30, problems_per_block: 8, blocks: 3, grade_range: "7a-7b+", rest_min_between_blocks: 10 },
-          3: { angle_deg: 35, problems_per_block: 6, blocks: 4, grade_range: "7b-7c", rest_min_between_blocks: 8 },
-          4: { angle_deg: 25, problems_per_block: 4, blocks: 2, grade_range: "7a-7b", rest_min_between_blocks: 10 },
+          1: { angle_deg: 25, rest_min_between_blocks: 10, target: "3 blocks × 5 routes @ V3-V4" },
+          2: { angle_deg: 30, rest_min_between_blocks: 10, target: "3 blocks × 6 routes @ V4-V5" },
+          3: { angle_deg: 35, rest_min_between_blocks: 8, target: "4 blocks × 5 routes @ V5-V6" },
+          4: { angle_deg: 25, rest_min_between_blocks: 10, target: "2 blocks × 4 routes @ V3-V4" },
         },
       },
       {

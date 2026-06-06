@@ -100,10 +100,14 @@ export const TYPES = {
   ],
   climbing_kilterboard: [
     FIELD("angle_deg", "integer", true, "Angle (°)"),
-    FIELD("problems_per_block", "integer", true, "Problems/block"),
-    FIELD("blocks", "integer", true, "Blocks"),
-    FIELD("grade_range", "text", true, "Grade range"),
-    FIELD("rest_min_between_blocks", "integer", true, "Rest (min)"),
+    FIELD("rest_min_between_blocks", "integer", true, "Rest between blocks (min)"),
+    FIELD("setRows", "set_table", true, "Blocks", {
+      columns: [
+        COL("grade", "text", "Grade (V-scale)"),
+        COL("routes_climbed", "integer", "Routes climbed"),
+      ],
+    }),
+    FIELD("rpe", "rpe", false, "Overall RPE"),
     FIELD("notes", "text", false, "Notes"),
   ],
   running_z2: [

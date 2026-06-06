@@ -7,53 +7,162 @@ import { getDraft, saveDraft, clearDraft, getLogText, saveLogText } from "../sto
 export function renderToday(root, state, { reload }) {
   const today = new Date();
   const dateIso = today.toISOString().slice(0, 10);
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   // Active session keys = user override (from picker) or today's defaults.
   const defaultKeys = state.day?.sessionKeys || [];
   const activeKeys = state.activeSessionKeys ?? defaultKeys;
-  const sessions = activeKeys.map((key) => getSession(key)).filter(Boolean);
 
   // Adjustments + watchlist banners
   const activeAdjustments = state.log.parsed.adjustments.filter((a) => isAdjustmentActive(a, today));
   const watchlist = state.log.parsed.watchlist;
 
+  // Custom mode: show block picker UI instead of normal form.
+  if (state.customMode === "selecting") {
+    root.innerHTML = `
+      ${renderBanners(activeAdjustments, watchlist)}
+      ${renderSessionPicker(activeKeys, defaultKeys, /*isCustom*/ true)}
+      ${renderCustomBlockPicker(state)}
+    `;
+    wireSessionPicker(root, state, reload);
+    wireCustomBlockPicker(root, state, reload);
+    return;
+  }
+
+  // Determine which "session(s)" to render.
+  let sessions;
+  if (Array.isArray(state.customBlocks) && state.customBlocks.length) {
+    sessions = [
+      {
+        name: "Custom",
+        duration_min: 0,
+        blocks: state.customBlocks,
+        isCustom: true,
+      },
+    ];
+  } else {
+    sessions = activeKeys.map((key) => getSession(key)).filter(Boolean);
+  }
+
   root.innerHTML = `
     ${renderBanners(activeAdjustments, watchlist)}
-    ${renderSessionPicker(activeKeys, defaultKeys)}
+    ${renderSessionPicker(activeKeys, defaultKeys, /*isCustom*/ Array.isArray(state.customBlocks) && state.customBlocks.length > 0)}
     ${sessions.length ? renderPreSession(dateIso) : ""}
     ${sessions.length
       ? sessions.map((sess, i) => renderSession(sess, state.day, state.log.parsed.adjustments, today, dateIso, i)).join("")
       : `<p class="empty" style="text-align:center;padding:2rem;color:var(--text-secondary)">Rest day — pick a session above to log a workout.</p>`}
   `;
 
-  // Wire picker
-  const picker = root.querySelector("#session-picker");
-  if (picker) {
-    picker.addEventListener("change", () => {
-      const val = picker.value;
-      if (val === "__default__") {
-        state.activeSessionKeys = null;
-      } else if (val === "__rest__") {
-        state.activeSessionKeys = [];
-      } else {
-        state.activeSessionKeys = [val];
-      }
-      renderToday(root, state, { reload });
-    });
-  }
+  wireSessionPicker(root, state, reload);
 
   // Restore drafts and wire input listeners
   if (sessions.length) wireForm(root, state, dateIso, sessions, reload);
 }
 
-function renderSessionPicker(activeKeys, defaultKeys) {
+function wireSessionPicker(root, state, reload) {
+  const picker = root.querySelector("#session-picker");
+  if (!picker) return;
+  picker.addEventListener("change", () => {
+    const val = picker.value;
+    if (val === "__default__") {
+      state.activeSessionKeys = null;
+      state.customBlocks = null;
+      state.customMode = null;
+    } else if (val === "__rest__") {
+      state.activeSessionKeys = [];
+      state.customBlocks = null;
+      state.customMode = null;
+    } else if (val === "__custom__") {
+      state.activeSessionKeys = null;
+      state.customBlocks = [];
+      state.customMode = "selecting";
+    } else {
+      state.activeSessionKeys = [val];
+      state.customBlocks = null;
+      state.customMode = null;
+    }
+    renderToday(root, state, { reload });
+  });
+}
+
+function renderCustomBlockPicker(state) {
+  const selectedSet = new Set((state.customBlocks || []).map((b) => `${b._fromSession}::${b.id}`));
+  const sessionSections = Object.entries(SESSIONS)
+    .map(([key, sess]) => {
+      const items = sess.blocks
+        .map((b) => {
+          const checked = selectedSet.has(`${key}::${b.id}`) ? "checked" : "";
+          return `<label class="custom-block-item">
+            <input type="checkbox" data-session-key="${esc(key)}" data-block-id="${esc(b.id)}" ${checked}>
+            <span>${esc(b.name)} <span class="muted">(${esc(b.type)})</span></span>
+          </label>`;
+        })
+        .join("");
+      return `<div class="custom-session-group">
+        <h3>${esc(sess.name)}</h3>
+        ${items}
+      </div>`;
+    })
+    .join("");
+  return `
+    <div class="custom-picker">
+      <p class="muted">Pick the blocks you want in today's custom session. Prescriptions and adjustments still apply.</p>
+      ${sessionSections}
+      <div class="custom-picker-actions">
+        <button type="button" id="custom-build">Build session</button>
+        <button type="button" id="custom-cancel">Cancel</button>
+      </div>
+    </div>
+  `;
+}
+
+function wireCustomBlockPicker(root, state, reload) {
+  const buildBtn = root.querySelector("#custom-build");
+  const cancelBtn = root.querySelector("#custom-cancel");
+  if (!buildBtn || !cancelBtn) return;
+
+  buildBtn.addEventListener("click", () => {
+    const picks = [];
+    root.querySelectorAll('.custom-picker input[type="checkbox"]:checked').forEach((cb) => {
+      const sessionKey = cb.dataset.sessionKey;
+      const blockId = cb.dataset.blockId;
+      const sess = SESSIONS[sessionKey];
+      const block = sess?.blocks.find((b) => b.id === blockId);
+      if (block) {
+        // Tag with origin session for label-resolution; never written to log.md.
+        picks.push({ ...block, _fromSession: sessionKey });
+      }
+    });
+    if (!picks.length) {
+      alert("Pick at least one block.");
+      return;
+    }
+    state.customBlocks = picks;
+    state.customMode = null;
+    renderToday(root, state, { reload });
+  });
+
+  cancelBtn.addEventListener("click", () => {
+    state.customBlocks = null;
+    state.customMode = null;
+    state.activeSessionKeys = null;
+    renderToday(root, state, { reload });
+  });
+}
+
+function renderSessionPicker(activeKeys, defaultKeys, isCustom) {
   const allKeys = Object.keys(SESSIONS);
   const isDefault =
+    !isCustom &&
     activeKeys.length === defaultKeys.length &&
     activeKeys.every((k, i) => k === defaultKeys[i]);
-  const isRest = activeKeys.length === 0;
-  const currentValue = isDefault ? "__default__" : isRest ? "__rest__" : activeKeys[0];
+  const isRest = !isCustom && activeKeys.length === 0;
+  const currentValue = isCustom
+    ? "__custom__"
+    : isDefault
+    ? "__default__"
+    : isRest
+    ? "__rest__"
+    : activeKeys[0];
   const defaultLabel = defaultKeys.length
     ? defaultKeys.map((k) => SESSIONS[k]?.name || k).join(" + ")
     : "Rest";
@@ -66,6 +175,7 @@ function renderSessionPicker(activeKeys, defaultKeys) {
           ${allKeys
             .map((k) => `<option value="${esc(k)}" ${k === currentValue ? "selected" : ""}>${esc(SESSIONS[k].name)}</option>`)
             .join("")}
+          <option value="__custom__" ${isCustom ? "selected" : ""}>Custom — pick blocks…</option>
           <option value="__rest__" ${isRest ? "selected" : ""}>Rest (no workout)</option>
         </select>
       </label>
@@ -145,7 +255,7 @@ function renderBlock(block, phase, adjustments, today, sessIdx, blockIdx) {
 function prescribedSummary(values) {
   return Object.entries(values)
     .filter(([k]) => k !== "notes")
-    .map(([k, v]) => `${k.replace(/_/g, " ")}: ${v}`)
+    .map(([k, v]) => (k === "target" ? `🎯 ${v}` : `${k.replace(/_/g, " ")}: ${v}`))
     .join(" · ");
 }
 
@@ -475,10 +585,11 @@ async function saveSession(state, dateIso, sess, sessIdx, root) {
 
   const blocks = sess.blocks.map((block, bi) => {
     const draftBlock = draft.sessions[sessIdx]?.blocks?.[bi] || { entry: {}, skipped: false };
+    const label = String.fromCharCode(65 + bi); // A, B, C, ...
     if (draftBlock.skipped) {
-      return { ...block, skipped: true };
+      return { ...block, _label: label, skipped: true };
     }
-    return { ...block, entry: coerceEntryTypes(block.type, draftBlock.entry) };
+    return { ...block, _label: label, entry: coerceEntryTypes(block.type, draftBlock.entry) };
   });
 
   // Validate non-skipped blocks
@@ -500,8 +611,8 @@ async function saveSession(state, dateIso, sess, sessIdx, root) {
     body: pre.body || "—",
     blocks: blocks.map((b) =>
       b.skipped
-        ? { label: blockLabel(b, sess), exercise: b.name, type: b.type, entry: { notes: "(skipped)" } }
-        : { label: blockLabel(b, sess), exercise: b.name, type: b.type, entry: b.entry },
+        ? { label: b._label, exercise: b.name, type: b.type, entry: { notes: "(skipped)" } }
+        : { label: b._label, exercise: b.name, type: b.type, entry: b.entry },
     ),
     globalNotes: pre.global_notes || "",
   });
@@ -512,12 +623,6 @@ async function saveSession(state, dateIso, sess, sessIdx, root) {
   const newContent = insertSession(latest, md, timestampStr);
   saveLogText(newContent);
   state.log = { text: newContent, parsed: (await import("../log-parser.js")).parseLog(newContent) };
-}
-
-function blockLabel(block, sess) {
-  // Use index-based A/B/C labels
-  const idx = sess.blocks.indexOf(block);
-  return String.fromCharCode(65 + idx);
 }
 
 function coerceEntryTypes(type, entry) {
