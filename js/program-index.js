@@ -15,6 +15,28 @@ export const SESSIONS = {
     duration_min: 90,
     blocks: [
       {
+        id: "shoulder-er-db",
+        type: "shoulder_er",
+        name: "Shoulder External Rotation (Side-lying Dumbbell)",
+        prescriptions: {
+          1: { position: 1, load_kg: 7, sets: 2, reps: 12 },
+          2: { position: 1, load_kg: 9, sets: 2, reps: 12 },
+          3: { position: 1, load_kg: 11, sets: 2, reps: 10 },
+          4: { position: 1, load_kg: 10, sets: 2, reps: 8 },
+        },
+      },
+      {
+        id: "reverse-wrist-curls",
+        type: "weighted_reps",
+        name: "Reverse Wrist Curls",
+        prescriptions: {
+          1: { load_kg: 5, sets: 3, reps: 15 },
+          2: { load_kg: 6, sets: 3, reps: 15 },
+          3: { load_kg: 7.5, sets: 3, reps: 15 },
+          4: { load_kg: 6, sets: 2, reps: 12 },
+        },
+      },
+      {
         id: "front-lever",
         type: "bodyweight_time",
         name: "Front Lever progression",
@@ -67,28 +89,6 @@ export const SESSIONS = {
           2: { load_kg: 25, sets: 4, reps: 6 },
           3: { load_kg: 25, sets: 4, reps: 5 },
           4: { load_kg: 22.5, sets: 3, reps: 5 },
-        },
-      },
-      {
-        id: "shoulder-er-db",
-        type: "shoulder_er",
-        name: "Shoulder External Rotation (Side-lying Dumbbell)",
-        prescriptions: {
-          1: { position: 1, load_kg: 7, sets: 2, reps: 12 },
-          2: { position: 1, load_kg: 9, sets: 2, reps: 12 },
-          3: { position: 1, load_kg: 11, sets: 2, reps: 10 },
-          4: { position: 1, load_kg: 10, sets: 2, reps: 8 },
-        },
-      },
-      {
-        id: "reverse-wrist-curls",
-        type: "weighted_reps",
-        name: "Reverse Wrist Curls",
-        prescriptions: {
-          1: { load_kg: 5, sets: 3, reps: 15 },
-          2: { load_kg: 6, sets: 3, reps: 15 },
-          3: { load_kg: 7.5, sets: 3, reps: 15 },
-          4: { load_kg: 6, sets: 2, reps: 12 },
         },
       },
     ],
@@ -303,6 +303,17 @@ export const SESSIONS = {
     duration_min: 90,
     blocks: [
       {
+        id: "shoulder-er-db",
+        type: "shoulder_er",
+        name: "Shoulder External Rotation (Side-lying Dumbbell)",
+        prescriptions: {
+          1: { position: 1, load_kg: 7, sets: 2, reps: 12 },
+          2: { position: 1, load_kg: 9, sets: 2, reps: 12 },
+          3: { position: 1, load_kg: 11, sets: 2, reps: 10 },
+          4: { position: 1, load_kg: 10, sets: 2, reps: 8 },
+        },
+      },
+      {
         id: "kilterboard-4x4",
         type: "climbing_kilterboard",
         name: "Kilterboard 4×4",
@@ -333,17 +344,6 @@ export const SESSIONS = {
           2: { load_kg: 22, sets: 3, hold_s_left: 14, hold_s_right: 14 },
           3: { load_kg: 25, sets: 3, hold_s_left: 16, hold_s_right: 16 },
           4: { load_kg: 22, sets: 2, hold_s_left: 12, hold_s_right: 12 },
-        },
-      },
-      {
-        id: "shoulder-er-db",
-        type: "shoulder_er",
-        name: "Shoulder External Rotation (Side-lying Dumbbell)",
-        prescriptions: {
-          1: { position: 1, load_kg: 7, sets: 2, reps: 12 },
-          2: { position: 1, load_kg: 9, sets: 2, reps: 12 },
-          3: { position: 1, load_kg: 11, sets: 2, reps: 10 },
-          4: { position: 1, load_kg: 10, sets: 2, reps: 8 },
         },
       },
     ],
