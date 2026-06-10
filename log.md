@@ -25,7 +25,13 @@
 
 ## Sessions
 
+### 2026-06-10 — Wed — ARC Climbing with friend (mandatory)
 
+**Phase:** 1 · **Week:** 3 · **Sleep prev night:** 0h · **Mood:** 0/5 · **Soreness:** 0/5 · **Body:** —
+
+**Block A — ARC session** _(climbing_arc)_
+- duration_min: 20 · grade_range: 6b+ - 6c+ · effort_pct: 80 · falls: 3
+- Notes: Can only do three routes. right now. But I was able to push to failure and climb to top on all three
 
 ## Daily Reviews
 
