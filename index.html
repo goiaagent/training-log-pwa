@@ -32,6 +32,16 @@
       window.addEventListener("load", () => {
         navigator.serviceWorker.register("./sw.js").catch((e) => console.warn("SW registration failed", e));
       });
+      // New SW versions activate immediately (skipWaiting + clients.claim in
+      // sw.js). Reload once when the controller changes so the fresh shell is
+      // picked up without the user ever clearing site data (which would wipe
+      // localStorage: sessions, drafts, and the GitHub token).
+      let reloadedForUpdate = false;
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (reloadedForUpdate) return;
+        reloadedForUpdate = true;
+        location.reload();
+      });
     }
   </script>
 </body>
