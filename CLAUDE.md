@@ -29,10 +29,10 @@ curl -sI https://goiaagent.github.io/training-log-pwa/ | head -1
 Understanding this is required for any non-trivial change.
 
 1. **PWA localStorage** (key `tlpwa:log`) is the canonical source for **Sessions**. The user writes here; nothing else does.
-2. **GitHub raw `log.md`** (`https://raw.githubusercontent.com/goiaagent/training-log-pwa/main/log.md`) is the canonical source for **Active Adjustments**, **Watchlist**, **Daily Reviews**, **Weekly Reviews**. Only Claude writes here (via git commits to this repo).
-3. **Google Drive folder** is the analysis exchange. User uploads a `log-YYYY-MM-DD.md` export from the PWA; Claude reads it via the Drive MCP and replies with an `analysis-YYYY-MM-DD.md` (review-only, no Sessions duplication) + a GitHub commit updating `log.md`.
+2. **GitHub `log.md`** is the shared state file. Claude writes **Active Adjustments / Watchlist / Daily Reviews / Weekly Reviews** via git commits. The PWA reads the raw URL on launch AND (since the GitHub-sync feature) **pushes Sessions back via the Contents API** (`js/github.js`, fine-grained PAT in Settings). So fresh session data is usually already in this repo's `log.md` — check `git pull` / the raw URL before asking the user for an export.
+3. **Google Drive folder** (`1voQwSKzDk_IOg5EfZvbVSxPN-rrZLaIJ`) is the fallback exchange (manual `log-YYYY-MM-DD.md` uploads) and where Claude drops `analysis-YYYY-MM-DD.md` artifacts.
 
-The merge happens in `js/remote.js` → `mergeRemoteIntoLocal()`: takes Sessions from local text, everything else from remote text. Local sessions are never lost; remote adjustments always win.
+The merge happens in `js/remote.js` → `mergeRemoteIntoLocal()`: takes Sessions from local text, everything else from remote text. Local sessions are never lost; remote adjustments always win. `js/github.js` runs the same merge before every push so the PWA can't clobber a fresh analysis.
 
 ## Per-set schema (`set_table` field kind)
 
@@ -64,7 +64,7 @@ If you add a new module under `js/`, also add it to the `SHELL` array in `sw.js`
 
 When asked to review a session:
 
-1. Read the user's log (from Drive MCP, attached file, or pasted content).
+1. Read the user's log — prefer this repo's `log.md` (PWA auto-syncs via GitHub now); fall back to Drive MCP, attached file, or pasted content.
 2. Cross-reference each block's actual vs. prescribed (from `program-index.js` + current phase).
 3. **Propose** adjustments + watchlist updates + a daily review entry by writing into local `log.md` — do NOT commit yet.
 4. Present the proposal in chat. Wait for the user to confirm with `y` (or revise).
@@ -77,6 +77,13 @@ Adjustment line format is fixed and is consumed by `log-parser.js` → `parseAdj
 ```
 
 Never edit the `## Sessions` section in `log.md` — it's the user's data. Only Active Adjustments / Watchlist / Daily Reviews / Weekly Reviews are Claude-owned.
+
+### Calibration guardrails (apply during every review)
+
+- **Target RPE band is 7-8.** A block at RPE 9 = hold (never progress it). RPE 10 = propose a deload in the same review.
+- **Finger-loaded blocks are stricter** (fingerboard, pinch, OAPU, kilterboard): two consecutive RPE 9s → propose a deload even without an RPE 10. Tendons lag muscles; the user's goal (Vietnam sport trip, Oct 2026) does not survive a pulley injury.
+- **Deload weeks are 6, 12, 18** (`programDayInfo().deload`). During those weeks: no progressions at all, expect ~60% volume, treat high-RPE entries as a red flag, and say so in the review.
+- **Weekly review every Sunday** — adherence, load trajectory per block, sleep/mood trend, next-week intent. Append to `## Weekly Reviews`.
 
 ## Files to read first when changing exercise data
 

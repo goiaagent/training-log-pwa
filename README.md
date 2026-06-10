@@ -1,97 +1,51 @@
 # Training Log PWA
 
-Phone-first PWA for daily workout logging, paired with a Claude Project for
-evening analysis. See the spec at
-`/Users/admin/Documents/Claude Sandbox/specs/2026-05-27-training-log-pwa-design.md`
-for the full design.
+Phone-first PWA for daily workout logging, paired with Claude for evening
+analysis and load calibration. Live at
+**https://goiaagent.github.io/training-log-pwa/**.
 
-## Architecture (one-paragraph)
+## Architecture (one paragraph)
 
-The PWA reads `program.md` (static program) and `log.md` (live training data) from
-your Google Drive. You log sessions in the PWA; entries are appended to `log.md`.
-Each evening (~22:00) your Claude Project reads `log.md`, proposes load
-adjustments and pattern flags, and writes them back to `log.md`. The next morning,
-the PWA reflects those adjustments in today's prescribed values.
-
-## Setup
-
-### 1. Google Cloud OAuth (one-time, ~15 min)
-
-1. Open the [Google Cloud Console](https://console.cloud.google.com/).
-2. Create a new project (or pick existing). Name: "Training Log PWA".
-3. APIs & Services → Library → search "Google Drive API" → Enable.
-4. APIs & Services → OAuth consent screen → External → fill required fields
-   (app name, support email, developer email). Skip scopes. Add yourself as a test user.
-5. APIs & Services → Credentials → Create credentials → OAuth client ID:
-   - Application type: **Web application**
-   - Name: "Training Log PWA"
-   - Authorized JavaScript origins: add
-     - `http://localhost:8080` (for local testing)
-     - `https://<your-github-username>.github.io` (for deployed)
-   - No redirect URIs needed (token client flow).
-6. Copy the **Client ID** (looks like `123-abc.apps.googleusercontent.com`).
-
-### 2. Drive folder
-
-1. Create a folder in your Google Drive named "Training" (or anything).
-2. Copy `/Users/admin/Documents/Claude Sandbox/hybrid-athlete-program.md` into it
-   as `program.md`. (The PWA looks for `program.md` by exact filename.)
-3. Get the folder ID from the URL: `drive.google.com/drive/folders/<this-id>`.
-
-### 3. Local config
-
-```bash
-cd training-log-pwa
-cp config.example.js config.local.js
-```
-
-Edit `config.local.js` with your Client ID, folder ID, and program start date.
-
-### 4. Run locally
-
-```bash
-npm install
-npx http-server -p 8080 --cors -c-1
-```
-
-Open http://localhost:8080. Sign in with Google. Today's session appears.
-
-### 5. Deploy to GitHub Pages
-
-1. Push the repo to GitHub.
-2. Repo Settings → Pages → Source: deploy from branch `main` / root.
-3. Wait ~1 min, your PWA is at `https://<username>.github.io/<repo>/`.
-4. Update the OAuth Authorized JavaScript origins to include the Pages URL.
-5. On your phone, open the URL in Safari/Chrome → share → "Add to Home Screen".
-
-### 6. Claude Project
-
-1. Create a new Claude Project named "Hybrid Athlete Training".
-2. Upload `program.md` to project knowledge.
-3. Enable the **Google Drive** MCP connector for the project; grant it access to
-   the same Training folder.
-4. Paste the system prompt from `docs/claude-system-prompt.md` (Task 22).
-5. Star the project for quick access.
-6. Configure the scheduled task (Task 23) to run `review today` daily at 22:00.
+The PWA stores sessions in localStorage as a single rolling `log.md` blob.
+On save it pushes that file to this repo via the GitHub Contents API
+(fine-grained PAT, pasted once in Settings). Claude reads `log.md` from the
+repo, analyzes the day's training against the program (`js/program-index.js`),
+and commits back **Active Adjustments**, **Watchlist**, and **Daily/Weekly
+Reviews**. On next launch the PWA fetches the raw `log.md`, merges (local owns
+Sessions, remote owns everything else), and today's prescribed values reflect
+Claude's calibration. No backend, no OAuth, no build step.
 
 ## Daily usage
 
-- During day: open PWA → fill today's session → Save.
-- 22:00: Claude posts review in the project chat → confirm with `y`.
-- Tomorrow morning: PWA reflects the new adjustments.
+1. Open the PWA (home-screen icon) → fill today's session → **Save**
+   (auto-syncs to GitHub).
+2. Tell Claude to run the review; confirm the proposed adjustments with `y`.
+3. Next morning the PWA shows the calibrated loads.
 
-## Editing a recent entry
+Fallback if GitHub sync is off: Settings → **Download log.md** → attach the
+file to the Claude chat (or drop it in the shared Drive folder).
 
-From the Log tab, the most recent session shows an "edit" link if within 24h
-of its date. Tap → modify → Save edits. The block is replaced in-place and
-gets an `_(edited <timestamp>)_` marker.
+## Setup (new device)
 
-## Tests
+1. Open the URL → Add to Home Screen.
+2. Settings → GitHub sync → paste a fine-grained PAT
+   (this repo only, permission: **Contents read/write**).
+
+Note: local sessions live in this device's localStorage. The GitHub `log.md`
+is the backup — a new device starts from the remote copy on first merge.
+
+## Development
 
 ```bash
-npx vitest run
+npm install
+npx vitest run                       # unit tests (pure-logic modules)
+npx http-server -p 8080 --cors -c-1  # local dev server
 ```
 
-## File layout
+Deploy = push to `main` (GitHub Pages serves the repo root).
+**Any change to shell files requires bumping `CACHE` in `sw.js`**, or
+returning clients will run stale code.
 
-See spec Section 6 + the project root.
+See `CLAUDE.md` for the data model, the per-set schema, and the analysis
+protocol; `docs/claude-system-prompt.md` for the review rules (RPE guardrails,
+deload weeks, adjustment format).

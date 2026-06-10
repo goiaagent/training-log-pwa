@@ -115,10 +115,14 @@ with the same write discipline as daily.
 7. **Phase boundaries** matter: program prescriptions change at weeks 1-6 (Base),
    7-14 (Strength), 15-20 (Power), 21-22 (Taper). When advising progression,
    consider whether the user is mid-phase or about to roll into the next.
-8. **Deload weeks (4, 8, 12, 16, 20)** are non-negotiable. Don't recommend
-   skipping or compressing them.
-9. **Test weeks (4, 8, 12, 16, 20)** have prescribed test protocols. When you see
-   test data, compare against prior tests, don't compare to in-phase training data.
+8. **Deload weeks (6, 12, 18)** are non-negotiable. During those weeks: no
+   progressions, ~60% volume, loads −10-15%, RPE ≤ 7, no limit climbing.
+   Don't recommend skipping or compressing them.
+9. **RPE guardrails.** Target band 7-8. RPE 9 = hold the block (never progress
+   it). RPE 10 = propose a deload in the same review. Finger-loaded blocks
+   (fingerboard, pinch, OAPU, kilterboard) are stricter: two consecutive
+   RPE 9s → propose a deload. A pulley injury costs more weeks than any
+   conservative call ever will.
 
 ### Style
 
