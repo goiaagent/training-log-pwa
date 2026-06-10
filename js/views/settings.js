@@ -1,12 +1,31 @@
 import { config } from "../../config.js";
-import { getLogText, saveLogText } from "../storage.js";
+import { getLogText, saveLogText, getGhToken, saveGhToken, clearGhToken } from "../storage.js";
 import { EMPTY_LOG_TEMPLATE } from "../log-builder.js";
+import { pushLogToGitHub } from "../github.js";
 
 export function renderSettings(root, state, { reload }) {
+  const ghToken = getGhToken();
   root.innerHTML = `
     <section>
-      <h2>Sync with Claude</h2>
-      <p class="muted">After today's session: tap <strong>Download log.md</strong>, attach the file to your Claude chat for review. Claude commits adjustments back to GitHub; the PWA refreshes them automatically on next launch.</p>
+      <h2>GitHub sync</h2>
+      <p class="muted">${
+        ghToken
+          ? "Token saved. Sessions push to GitHub automatically on save — no manual upload needed. Just tell Claude to run the review."
+          : "Paste a fine-grained PAT (repo: <code>" + esc(config.githubRepo) + "</code>, permission: Contents read/write). Sessions then push automatically on save."
+      }</p>
+      ${
+        ghToken
+          ? `<button id="gh-sync-now">⬆️ Sync to GitHub now</button>
+             <button id="gh-clear">Remove token</button>`
+          : `<input type="password" id="gh-token-input" placeholder="github_pat_…" style="width:100%;padding:.5rem;margin-bottom:.5rem">
+             <button id="gh-save">Save token</button>`
+      }
+      <div id="gh-status" class="muted"></div>
+    </section>
+
+    <section>
+      <h2>Manual sync (fallback)</h2>
+      <p class="muted">If GitHub sync is off: tap <strong>Download log.md</strong> and attach the file to your Claude chat for review.</p>
       <button id="export-log">📥 Download log.md</button>
       <button id="refresh-remote">🔄 Refresh adjustments from GitHub</button>
     </section>
@@ -32,6 +51,27 @@ export function renderSettings(root, state, { reload }) {
       <button id="reset-log" style="background:#a33">Reset local log (lose all sessions)</button>
     </section>
   `;
+
+  const ghStatus = document.getElementById("gh-status");
+  document.getElementById("gh-save")?.addEventListener("click", () => {
+    const v = document.getElementById("gh-token-input").value.trim();
+    if (!v) return;
+    saveGhToken(v);
+    renderSettings(root, state, { reload });
+  });
+  document.getElementById("gh-clear")?.addEventListener("click", () => {
+    clearGhToken();
+    renderSettings(root, state, { reload });
+  });
+  document.getElementById("gh-sync-now")?.addEventListener("click", async () => {
+    ghStatus.textContent = "Syncing…";
+    try {
+      const r = await pushLogToGitHub();
+      ghStatus.textContent = r.skipped ? "Nothing to sync." : "✓ Synced to GitHub";
+    } catch (e) {
+      ghStatus.textContent = `✗ ${e.message}`;
+    }
+  });
 
   document.getElementById("export-log").addEventListener("click", () => {
     const text = getLogText() || state.log.text;

@@ -48,3 +48,16 @@ export function getLogText() {
 export function saveLogText(text) {
   writeString("log", text);
 }
+
+// Fine-grained GitHub PAT for direct log.md sync (Settings → GitHub sync).
+export function getGhToken() {
+  return readString("gh-token");
+}
+
+export function saveGhToken(token) {
+  writeString("gh-token", token);
+}
+
+export function clearGhToken() {
+  remove("gh-token");
+}

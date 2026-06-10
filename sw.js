@@ -9,6 +9,7 @@ const SHELL = [
   "./config.js",
   "./js/app.js",
   "./js/remote.js",
+  "./js/github.js",
   "./js/log-parser.js",
   "./js/log-builder.js",
   "./js/program-index.js",
@@ -38,8 +39,8 @@ self.addEventListener("activate", (e) => {
 
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
-  // Always network for the remote log fetch.
-  if (url.host.includes("raw.githubusercontent.com")) return;
+  // Always network for the remote log fetch and the Contents API.
+  if (url.host.includes("raw.githubusercontent.com") || url.host.includes("api.github.com")) return;
   e.respondWith(
     caches.match(e.request).then((cached) => cached || fetch(e.request))
   );

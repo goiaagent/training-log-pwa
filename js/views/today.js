@@ -3,6 +3,7 @@ import { fieldsFor, validateEntry } from "../exercise-types.js";
 import { resolvePrescribed, isAdjustmentActive } from "../prescribed.js";
 import { buildSessionMarkdown, insertSession } from "../log-builder.js";
 import { getDraft, saveDraft, clearDraft, getLogText, saveLogText } from "../storage.js";
+import { pushLogToGitHub, hasGhToken } from "../github.js";
 
 // Local-timezone YYYY-MM-DD. toISOString() is UTC and mis-dates early-morning
 // sessions for anyone east of Greenwich.
@@ -441,9 +442,19 @@ function wireForm(root, state, dateIso, sessions, reload) {
       status.textContent = "Saving…";
       try {
         await saveSession(state, dateIso, sessions[sessIdx], sessIdx, root);
-        status.textContent = `✓ Saved · ${timeNow()}`;
         clearDraft(dateIso);
-        setTimeout(reload, 800);
+        if (hasGhToken()) {
+          status.textContent = "✓ Saved · syncing to GitHub…";
+          try {
+            await pushLogToGitHub();
+            status.textContent = `✓ Saved · synced · ${timeNow()}`;
+          } catch {
+            status.textContent = `✓ Saved locally · GitHub sync failed (retry from Settings)`;
+          }
+        } else {
+          status.textContent = `✓ Saved · ${timeNow()}`;
+        }
+        setTimeout(reload, 1000);
       } catch (err) {
         status.textContent = `✗ ${err.message}`;
         btn.disabled = false;
