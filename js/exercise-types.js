@@ -16,7 +16,7 @@ const FIELD = (name, kind, required, label, extra = {}) => ({
   ...extra,
 });
 
-const COL = (name, kind, label) => ({ name, kind, label });
+const COL = (name, kind, label, extra = {}) => ({ name, kind, label, ...extra });
 
 export const TYPES = {
   weighted_reps: [
@@ -62,7 +62,10 @@ export const TYPES = {
     FIELD("height_cm", "number", false, "Height (cm)"),
     FIELD("load_vest_kg", "number", false, "Vest (kg)"),
     FIELD("setRows", "set_table", true, "Sets", {
-      columns: [COL("reps", "integer", "Reps")],
+      columns: [
+        COL("reps", "integer", "Reps (total)"),
+        COL("clapping_reps", "integer", "Clapping (subset)", { optional: true }),
+      ],
     }),
     FIELD("rpe", "rpe", true, "RPE"),
     FIELD("notes", "text", false, "Notes"),
@@ -146,9 +149,10 @@ export function validateEntry(type, entry) {
         missing.push(f.name);
         continue;
       }
-      // Each row must have all column values.
+      // Each row must have all required column values. Optional columns are skipped.
       for (let i = 0; i < v.length; i++) {
         for (const col of f.columns) {
+          if (col.optional) continue;
           if (v[i][col.name] === undefined || v[i][col.name] === "" || v[i][col.name] === null) {
             missing.push(`${f.name}[${i + 1}].${col.name}`);
           }
