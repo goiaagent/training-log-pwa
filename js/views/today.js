@@ -51,6 +51,7 @@ export function renderToday(root, state, { reload }) {
   }
 
   root.innerHTML = `
+    ${state.day?.deload ? `<div class="banner deload-banner">🛌 <strong>Deload week.</strong> Cut sets ~40%, loads −10-15%, target RPE ≤ 7. Climbing: easy volume only, no limit attempts.</div>` : ""}
     ${renderBanners(activeAdjustments, watchlist)}
     ${renderSessionPicker(activeKeys, defaultKeys, /*isCustom*/ Array.isArray(state.customBlocks) && state.customBlocks.length > 0)}
     ${sessions.length ? renderPreSession(dateIso) : ""}

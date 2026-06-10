@@ -20,9 +20,9 @@ export const SESSIONS = {
         name: "Shoulder External Rotation (Side-lying Dumbbell)",
         prescriptions: {
           1: { position: 1, load_kg: 7, sets: 2, reps: 12 },
-          2: { position: 1, load_kg: 9, sets: 2, reps: 12 },
-          3: { position: 1, load_kg: 11, sets: 2, reps: 10 },
-          4: { position: 1, load_kg: 10, sets: 2, reps: 8 },
+          2: { position: 1, load_kg: 7.5, sets: 2, reps: 12 },
+          3: { position: 1, load_kg: 9, sets: 2, reps: 10 },
+          4: { position: 1, load_kg: 7.5, sets: 2, reps: 10 },
         },
       },
       {
@@ -42,8 +42,8 @@ export const SESSIONS = {
         name: "Front Lever progression",
         prescriptions: {
           1: { stage: "adv tuck", sets: 3, hold_seconds: 12 },
-          2: { stage: "one-leg", sets: 3, hold_seconds: 12 },
-          3: { stage: "straddle", sets: 3, hold_seconds: 10 },
+          2: { stage: "one-leg", sets: 3, hold_seconds: 10 },
+          3: { stage: "straddle", sets: 3, hold_seconds: 8 },
           4: { stage: "straddle (maintain)", sets: 2, hold_seconds: 8 },
         },
       },
@@ -52,10 +52,10 @@ export const SESSIONS = {
         type: "bodyweight_reps_per_side",
         name: "OAPU finger-drop",
         prescriptions: {
-          1: { progression: "5-finger", sets: 3, reps_left: 3, reps_right: 3 },
-          2: { progression: "4-finger", sets: 3, reps_left: 3, reps_right: 3 },
-          3: { progression: "3-finger", sets: 3, reps_left: 3, reps_right: 3 },
-          4: { progression: "3-finger (maintain)", sets: 2, reps_left: 3, reps_right: 3 },
+          1: { progression: "asymmetric: back-3 one arm / full other", sets: 3, reps_left: 3, reps_right: 3 },
+          2: { progression: "back-3 both arms", sets: 3, reps_left: 3, reps_right: 3 },
+          3: { progression: "2-finger (or 1-arm back-3)", sets: 3, reps_left: 3, reps_right: 3 },
+          4: { progression: "hold current (maintain)", sets: 2, reps_left: 3, reps_right: 3 },
         },
       },
       {
@@ -63,10 +63,10 @@ export const SESSIONS = {
         type: "weighted_time",
         name: "Fingerboard MaxHangs (20mm)",
         prescriptions: {
-          1: { load_kg: 35, sets: 4, hold_seconds: 8 },
-          2: { load_kg: 37.5, sets: 4, hold_seconds: 8 },
-          3: { load_kg: 40, sets: 4, hold_seconds: 7 },
-          4: { load_kg: 37.5, sets: 3, hold_seconds: 7 },
+          1: { load_kg: 32.5, sets: 4, hold_seconds: 8 },
+          2: { load_kg: 35, sets: 4, hold_seconds: 8 },
+          3: { load_kg: 37.5, sets: 4, hold_seconds: 7 },
+          4: { load_kg: 35, sets: 3, hold_seconds: 7 },
         },
       },
       {
@@ -76,7 +76,7 @@ export const SESSIONS = {
         prescriptions: {
           1: { load_kg: 20, sets: 3, hold_s_left: 12, hold_s_right: 12 },
           2: { load_kg: 22, sets: 3, hold_s_left: 12, hold_s_right: 12 },
-          3: { load_kg: 25, sets: 3, hold_s_left: 12, hold_s_right: 12 },
+          3: { load_kg: 24, sets: 3, hold_s_left: 12, hold_s_right: 12 },
           4: { load_kg: 22, sets: 2, hold_s_left: 12, hold_s_right: 12 },
         },
       },
@@ -86,7 +86,7 @@ export const SESSIONS = {
         name: "Weighted Pull-Ups",
         prescriptions: {
           1: { load_kg: 22.5, sets: 4, reps: 7 },
-          2: { load_kg: 25, sets: 4, reps: 6 },
+          2: { load_kg: 24, sets: 4, reps: 6 },
           3: { load_kg: 25, sets: 4, reps: 5 },
           4: { load_kg: 22.5, sets: 3, reps: 5 },
         },
@@ -166,9 +166,9 @@ export const SESSIONS = {
         name: "Bulgarian Split Squats (per leg)",
         prescriptions: {
           1: { load_kg: 17.5, sets: 3, reps: 8 },
-          2: { load_kg: 20, sets: 3, reps: 8 },
-          3: { load_kg: 22.5, sets: 3, reps: 6 },
-          4: { load_kg: 20, sets: 2, reps: 6 },
+          2: { load_kg: 17.5, sets: 3, reps: 8 },
+          3: { load_kg: 20, sets: 3, reps: 6 },
+          4: { load_kg: 17.5, sets: 2, reps: 6 },
         },
       },
       {
@@ -188,9 +188,9 @@ export const SESSIONS = {
         name: "Shoulder External Rotation (Side-lying Dumbbell)",
         prescriptions: {
           1: { position: 1, load_kg: 7, sets: 2, reps: 12 },
-          2: { position: 1, load_kg: 9, sets: 2, reps: 12 },
-          3: { position: 1, load_kg: 11, sets: 2, reps: 10 },
-          4: { position: 1, load_kg: 10, sets: 2, reps: 8 },
+          2: { position: 1, load_kg: 7.5, sets: 2, reps: 12 },
+          3: { position: 1, load_kg: 9, sets: 2, reps: 10 },
+          4: { position: 1, load_kg: 7.5, sets: 2, reps: 10 },
         },
       },
     ],
@@ -206,9 +206,9 @@ export const SESSIONS = {
         name: "Weighted Dips",
         prescriptions: {
           1: { load_kg: 20, sets: 3, reps: 8 },
-          2: { load_kg: 22.5, sets: 3, reps: 8 },
-          3: { load_kg: 25, sets: 3, reps: 7 },
-          4: { load_kg: 22.5, sets: 2, reps: 6 },
+          2: { load_kg: 20, sets: 3, reps: 7 },
+          3: { load_kg: 22.5, sets: 3, reps: 6 },
+          4: { load_kg: 20, sets: 2, reps: 6 },
         },
       },
       {
@@ -216,10 +216,10 @@ export const SESSIONS = {
         type: "weighted_reps",
         name: "DB Overhead Press",
         prescriptions: {
-          1: { load_kg: 20, sets: 4, reps: 7 },
-          2: { load_kg: 22, sets: 4, reps: 7 },
-          3: { load_kg: 22, sets: 4, reps: 8 },
-          4: { load_kg: 20, sets: 3, reps: 6 },
+          1: { load_kg: 17.5, sets: 4, reps: 7 },
+          2: { load_kg: 17.5, sets: 4, reps: 7 },
+          3: { load_kg: 20, sets: 4, reps: 6 },
+          4: { load_kg: 17.5, sets: 3, reps: 6 },
         },
       },
       {
@@ -228,8 +228,8 @@ export const SESSIONS = {
         name: "Lateral Raises",
         prescriptions: {
           1: { load_kg: 6, sets: 4, reps: 15 },
-          2: { load_kg: 7.5, sets: 4, reps: 15 },
-          3: { load_kg: 8, sets: 4, reps: 13 },
+          2: { load_kg: 6, sets: 4, reps: 15 },
+          3: { load_kg: 7.5, sets: 4, reps: 12 },
           4: { load_kg: 6, sets: 3, reps: 12 },
         },
       },
@@ -261,8 +261,8 @@ export const SESSIONS = {
         name: "Toes-to-Bar",
         prescriptions: {
           1: { load_kg: 0, sets: 3, reps: 6 },
-          2: { load_kg: 0, sets: 3, reps: 8 },
-          3: { load_kg: 0, sets: 3, reps: 10 },
+          2: { load_kg: 0, sets: 3, reps: 6 },
+          3: { load_kg: 0, sets: 3, reps: 8 },
           4: { load_kg: 0, sets: 2, reps: 6 },
         },
       },
@@ -272,9 +272,9 @@ export const SESSIONS = {
         name: "Shoulder External Rotation (Side-lying Dumbbell)",
         prescriptions: {
           1: { position: 1, load_kg: 7, sets: 2, reps: 12 },
-          2: { position: 1, load_kg: 9, sets: 2, reps: 12 },
-          3: { position: 1, load_kg: 11, sets: 2, reps: 10 },
-          4: { position: 1, load_kg: 10, sets: 2, reps: 8 },
+          2: { position: 1, load_kg: 7.5, sets: 2, reps: 12 },
+          3: { position: 1, load_kg: 9, sets: 2, reps: 10 },
+          4: { position: 1, load_kg: 7.5, sets: 2, reps: 10 },
         },
       },
     ],
@@ -308,9 +308,9 @@ export const SESSIONS = {
         name: "Shoulder External Rotation (Side-lying Dumbbell)",
         prescriptions: {
           1: { position: 1, load_kg: 7, sets: 2, reps: 12 },
-          2: { position: 1, load_kg: 9, sets: 2, reps: 12 },
-          3: { position: 1, load_kg: 11, sets: 2, reps: 10 },
-          4: { position: 1, load_kg: 10, sets: 2, reps: 8 },
+          2: { position: 1, load_kg: 7.5, sets: 2, reps: 12 },
+          3: { position: 1, load_kg: 9, sets: 2, reps: 10 },
+          4: { position: 1, load_kg: 7.5, sets: 2, reps: 10 },
         },
       },
       {
@@ -318,10 +318,10 @@ export const SESSIONS = {
         type: "climbing_kilterboard",
         name: "Kilterboard 4×4",
         prescriptions: {
-          1: { angle_deg: 25, rest_min_between_blocks: 10, target: "3 blocks × 5 routes @ V3-V4" },
-          2: { angle_deg: 30, rest_min_between_blocks: 10, target: "3 blocks × 6 routes @ V4-V5" },
-          3: { angle_deg: 35, rest_min_between_blocks: 8, target: "4 blocks × 5 routes @ V5-V6" },
-          4: { angle_deg: 25, rest_min_between_blocks: 10, target: "2 blocks × 4 routes @ V3-V4" },
+          1: { angle_deg: 30, rest_min_between_blocks: 10, target: "3 blocks × 5 routes @ V4" },
+          2: { angle_deg: 30, rest_min_between_blocks: 10, target: "3 blocks × 6 routes @ V4" },
+          3: { angle_deg: 35, rest_min_between_blocks: 8, target: "4 blocks × 5 routes @ V4-V5" },
+          4: { angle_deg: 30, rest_min_between_blocks: 10, target: "2 blocks × 4 routes @ V4" },
         },
       },
       {
@@ -330,8 +330,8 @@ export const SESSIONS = {
         name: "Heavy DB Rows",
         prescriptions: {
           1: { load_kg: 26, sets: 3, reps: 10 },
-          2: { load_kg: 28, sets: 3, reps: 10 },
-          3: { load_kg: 30, sets: 3, reps: 8 },
+          2: { load_kg: 26, sets: 3, reps: 10 },
+          3: { load_kg: 28, sets: 3, reps: 8 },
           4: { load_kg: 26, sets: 2, reps: 8 },
         },
       },
@@ -341,8 +341,8 @@ export const SESSIONS = {
         name: "Pinch Block (balance sets)",
         prescriptions: {
           1: { load_kg: 20, sets: 3, hold_s_left: 12, hold_s_right: 12 },
-          2: { load_kg: 22, sets: 3, hold_s_left: 14, hold_s_right: 14 },
-          3: { load_kg: 25, sets: 3, hold_s_left: 16, hold_s_right: 16 },
+          2: { load_kg: 22, sets: 3, hold_s_left: 12, hold_s_right: 12 },
+          3: { load_kg: 24, sets: 3, hold_s_left: 14, hold_s_right: 14 },
           4: { load_kg: 22, sets: 2, hold_s_left: 12, hold_s_right: 12 },
         },
       },
@@ -406,9 +406,11 @@ export function programDayInfo(date = new Date(), startDateIso = config.programS
   const dayIndex = Math.floor((today - start) / MS_PER_DAY); // 0-based
   const week = Math.floor(dayIndex / 7) + 1; // 1-based
   const phase = week <= 6 ? 1 : week <= 14 ? 2 : week <= 20 ? 3 : 4;
+  // Deload weeks: last week of phase 1, mid-phase-2, last week of phase 3.
+  const deload = week === 6 || week === 12 || week === 18;
   const dayOfWeek = today.getDay();
   const sessionKeys = DAY_OF_WEEK_TO_SESSIONS[dayOfWeek];
-  return { dayIndex, week, phase, dayOfWeek, sessionKeys };
+  return { dayIndex, week, phase, deload, dayOfWeek, sessionKeys };
 }
 
 export function getSession(key) {
