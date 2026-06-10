@@ -4,9 +4,16 @@ import { resolvePrescribed, isAdjustmentActive } from "../prescribed.js";
 import { buildSessionMarkdown, insertSession } from "../log-builder.js";
 import { getDraft, saveDraft, clearDraft, getLogText, saveLogText } from "../storage.js";
 
+// Local-timezone YYYY-MM-DD. toISOString() is UTC and mis-dates early-morning
+// sessions for anyone east of Greenwich.
+function localIso(d) {
+  const p = (n) => String(n).padStart(2, "0");
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
+}
+
 export function renderToday(root, state, { reload }) {
   const today = new Date();
-  const dateIso = today.toISOString().slice(0, 10);
+  const dateIso = localIso(today);
 
   // Active session keys = user override (from picker) or today's defaults.
   const defaultKeys = state.day?.sessionKeys || [];
@@ -214,6 +221,9 @@ function renderPreSession(dateIso) {
       </label>
       <label>Body notes
         <input type="text" name="body" placeholder="e.g. quads sore, R shoulder tight">
+      </label>
+      <label>Session notes (overall)
+        <input type="text" name="global_notes" placeholder="anything about the day as a whole">
       </label>
     </section>
   `;
@@ -608,6 +618,7 @@ async function saveSession(state, dateIso, sess, sessIdx, root) {
     week: state.day.week,
     sleep_h: Number(pre.sleep_h) || 0,
     mood: Number(pre.mood) || 0,
+    soreness: Number(pre.soreness) || 0,
     body: pre.body || "—",
     blocks: blocks.map((b) =>
       b.skipped
@@ -619,7 +630,8 @@ async function saveSession(state, dateIso, sess, sessIdx, root) {
 
   // Splice into local log.md and persist.
   const latest = getLogText() || state.log.text;
-  const timestampStr = new Date().toISOString().slice(0, 16).replace("T", " ");
+  const now = new Date();
+  const timestampStr = `${localIso(now)} ${now.toTimeString().slice(0, 5)}`;
   const newContent = insertSession(latest, md, timestampStr);
   saveLogText(newContent);
   state.log = { text: newContent, parsed: (await import("../log-parser.js")).parseLog(newContent) };

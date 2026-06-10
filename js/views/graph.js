@@ -42,46 +42,79 @@ function collectExercises(sessions) {
   const set = new Set();
   for (const s of sessions) {
     for (const b of s.blocks || []) {
-      if (hasWeightedSets(b)) set.add(b.exercise);
+      if (blockMetric(b)) set.add(b.exercise);
     }
   }
   return Array.from(set).sort();
 }
 
-function hasWeightedSets(block) {
-  if (!Array.isArray(block.entry?.setRows)) return false;
-  return block.entry.setRows.some((r) => r.load_kg != null && r.reps != null);
-}
+// Pick the most meaningful single number for a block, depending on what its
+// set rows contain. Returns { value, label, unit } or null if not chartable.
+function blockMetric(block) {
+  const rows = block.entry?.setRows;
+  if (!Array.isArray(rows) || !rows.length) return null;
+  const nums = (k) => rows.map((r) => Number(r[k]) || 0);
 
-// Estimated 1RM via Epley: weight * (1 + reps/30). Take max across sets that day.
-function epley1RM(setRow) {
-  const w = Number(setRow.load_kg);
-  const r = Number(setRow.reps);
-  if (!Number.isFinite(w) || !Number.isFinite(r) || w <= 0 || r <= 0) return null;
-  return w * (1 + r / 30);
+  // Weighted reps → estimated 1RM via Epley: weight × (1 + reps/30).
+  if (rows.some((r) => r.load_kg > 0 && r.reps > 0)) {
+    const best = Math.max(
+      ...rows.map((r) => (r.load_kg > 0 && r.reps > 0 ? r.load_kg * (1 + r.reps / 30) : 0)),
+    );
+    return { value: best, label: "Est. 1RM", unit: "kg" };
+  }
+  // Weighted symmetric holds (fingerboard) → load·seconds volume, captures
+  // both load and hold quality (35kg × 13s total reads worse than 30kg × 32s).
+  if (rows.some((r) => r.load_kg > 0 && r.hold_seconds > 0)) {
+    const vol = rows.reduce((a, r) => a + (Number(r.load_kg) || 0) * (Number(r.hold_seconds) || 0), 0);
+    return { value: vol, label: "Load × hold volume", unit: "kg·s" };
+  }
+  // Weighted per-side holds (pinch) → load·seconds volume across both sides.
+  if (rows.some((r) => r.load_kg > 0 && (r.hold_s_left > 0 || r.hold_s_right > 0))) {
+    const vol = rows.reduce(
+      (a, r) => a + (Number(r.load_kg) || 0) * ((Number(r.hold_s_left) || 0) + (Number(r.hold_s_right) || 0)),
+      0,
+    );
+    return { value: vol, label: "Load × hold volume", unit: "kg·s" };
+  }
+  // Bodyweight reps (Dragon Flag, T2B at load 0) → best set.
+  if (rows.some((r) => r.reps > 0)) {
+    return { value: Math.max(...nums("reps")), label: "Best-set reps", unit: "reps" };
+  }
+  // Bodyweight holds (front lever) → longest hold.
+  if (rows.some((r) => r.hold_seconds > 0)) {
+    return { value: Math.max(...nums("hold_seconds")), label: "Longest hold", unit: "s" };
+  }
+  // Per-side reps (OAPU, bounds, copenhagen) → weaker-side best set.
+  if (rows.some((r) => r.reps_left > 0 || r.reps_right > 0)) {
+    const best = Math.max(...rows.map((r) => Math.min(Number(r.reps_left) || 0, Number(r.reps_right) || 0)));
+    return { value: best, label: "Reps (weaker side)", unit: "reps" };
+  }
+  return null;
 }
 
 function dataForExercise(sessions, name) {
   const points = [];
+  let label = null;
+  let unit = "";
   // Sessions are typically newest-first in parsed array.
   for (const s of sessions) {
     let best = null;
     for (const b of s.blocks || []) {
       if (b.exercise !== name) continue;
-      for (const r of b.entry?.setRows || []) {
-        const e = epley1RM(r);
-        if (e == null) continue;
-        if (best == null || e > best) best = e;
-      }
+      const m = blockMetric(b);
+      if (!m) continue;
+      if (best == null || m.value > best) best = m.value;
+      label = m.label;
+      unit = m.unit;
     }
     if (best != null) points.push({ date: s.date, value: best });
   }
   // Sort oldest → newest for plotting.
-  return points.sort((a, b) => a.date.localeCompare(b.date));
+  return { points: points.sort((a, b) => a.date.localeCompare(b.date)), label, unit };
 }
 
 function renderChart(container, sessions, exerciseName) {
-  const data = dataForExercise(sessions, exerciseName);
+  const { points: data, label: metricLabel, unit } = dataForExercise(sessions, exerciseName);
   if (data.length < 1) {
     container.innerHTML = `<p class="empty" style="padding:1rem;color:var(--text-secondary)">No data points yet.</p>`;
     return;
@@ -132,10 +165,10 @@ function renderChart(container, sessions, exerciseName) {
 
   container.innerHTML = `
     <div style="margin-bottom:.75rem">
-      <div style="font-size:1.5rem;font-weight:600">${latest.value.toFixed(1)} kg</div>
+      <div style="font-size:1.5rem;font-weight:600">${latest.value.toFixed(1)} ${unit}</div>
       <div style="font-size:.85rem;color:var(--text-secondary)">
-        Latest est. 1RM · ${data.length} session${data.length === 1 ? "" : "s"}
-        ${data.length >= 2 ? ` · ${delta >= 0 ? "+" : ""}${delta.toFixed(1)}kg (${deltaPct >= 0 ? "+" : ""}${deltaPct.toFixed(1)}%)` : ""}
+        ${metricLabel} · ${data.length} session${data.length === 1 ? "" : "s"}
+        ${data.length >= 2 ? ` · ${delta >= 0 ? "+" : ""}${delta.toFixed(1)}${unit} (${deltaPct >= 0 ? "+" : ""}${deltaPct.toFixed(1)}%)` : ""}
       </div>
     </div>
     <svg viewBox="0 0 ${W} ${H}" width="100%" style="background:var(--surface);border-radius:.5rem">

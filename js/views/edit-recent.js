@@ -134,6 +134,7 @@ function buildEditedSession(root, recent) {
     week: recent.week,
     sleep_h: pre.sleep_h,
     mood: pre.mood,
+    soreness: recent.soreness, // not editable in this form; pass through unchanged
     body: pre.body,
     blocks,
     globalNotes: root.querySelector('input[name="global_notes"]').value || "",

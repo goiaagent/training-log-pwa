@@ -25,13 +25,15 @@ export function buildSessionMarkdown(session) {
     week,
     sleep_h,
     mood,
+    soreness,
     body,
     blocks,
     globalNotes,
   } = session;
 
   const header = `### ${date} — ${dayOfWeek} — ${name}`;
-  const meta = `**Phase:** ${phase} · **Week:** ${week} · **Sleep prev night:** ${sleep_h}h · **Mood:** ${mood}/5 · **Body:** ${body || "—"}`;
+  const sorenessPart = soreness != null ? ` · **Soreness:** ${soreness}/5` : "";
+  const meta = `**Phase:** ${phase} · **Week:** ${week} · **Sleep prev night:** ${sleep_h}h · **Mood:** ${mood}/5${sorenessPart} · **Body:** ${body || "—"}`;
 
   const blockChunks = blocks.map((b) => renderBlock(b));
   const globalLine = globalNotes ? `**Global notes:** ${globalNotes}` : "";

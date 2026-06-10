@@ -96,6 +96,7 @@ function parseSessions(lines) {
         week: null,
         sleep_h: null,
         mood: null,
+        soreness: null,
         body: null,
         blocks: [],
         globalNotes: "",
@@ -112,6 +113,8 @@ function parseSessions(lines) {
       if (sleep) current.sleep_h = Number(sleep[1]);
       const mood = line.match(/Mood:\*\*\s*(\d+)\/5/);
       if (mood) current.mood = Number(mood[1]);
+      const soreness = line.match(/Soreness:\*\*\s*(\d+)\/5/);
+      if (soreness) current.soreness = Number(soreness[1]);
       const body = line.match(/Body:\*\*\s*(.+?)\s*$/);
       if (body) current.body = body[1].trim();
       continue;

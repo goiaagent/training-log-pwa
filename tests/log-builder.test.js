@@ -86,6 +86,39 @@ describe("log-builder", () => {
     expect(oldIdx).toBeGreaterThan(newIdx);
   });
 
+  it("includes soreness in the meta line when provided", () => {
+    const md = buildSessionMarkdown({
+      date: "2026-06-10",
+      dayOfWeek: "Wed",
+      name: "S",
+      phase: 1,
+      week: 3,
+      sleep_h: 8,
+      mood: 3,
+      soreness: 2,
+      body: "—",
+      blocks: [],
+      globalNotes: "",
+    });
+    expect(md).toContain("**Mood:** 3/5 · **Soreness:** 2/5 · **Body:**");
+  });
+
+  it("omits soreness when not provided (backward compat)", () => {
+    const md = buildSessionMarkdown({
+      date: "2026-06-10",
+      dayOfWeek: "Wed",
+      name: "S",
+      phase: 1,
+      week: 3,
+      sleep_h: 8,
+      mood: 3,
+      body: "—",
+      blocks: [],
+      globalNotes: "",
+    });
+    expect(md).not.toContain("Soreness");
+  });
+
   it("serializes setRows as per-set lines", () => {
     const md = buildSessionMarkdown({
       date: "2026-07-15",

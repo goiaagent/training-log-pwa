@@ -101,6 +101,22 @@ describe("log-parser", () => {
     expect(parsed.weeklyReviewsRaw).toContain("### Week 10");
   });
 
+  it("parses soreness from the meta line", () => {
+    const text = `# Log
+## Active Adjustments
+## Watchlist
+## Sessions
+### 2026-06-10 — Wed — S
+**Phase:** 1 · **Week:** 3 · **Sleep prev night:** 8h · **Mood:** 3/5 · **Soreness:** 2/5 · **Body:** —
+
+## Daily Reviews
+## Weekly Reviews
+`;
+    const parsed = parseLog(text);
+    expect(parsed.sessions[0].soreness).toBe(2);
+    expect(parsed.sessions[0].mood).toBe(3);
+  });
+
   it("parses setRows from per-set lines", () => {
     const text = `# Log
 ## Active Adjustments
