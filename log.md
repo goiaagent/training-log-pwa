@@ -1,27 +1,26 @@
 # Hybrid Athlete Training Log
 
 **Program start:** 2026-05-25
-**Last updated:** 2026-06-10 (Day 5+6 review — Lower + Push)
+**Last updated:** 2026-06-10 (Day 7 review — ARC + history restore)
 
 ## Active Adjustments
 
-- **fingerboard-maxhangs.load_kg** — 32.5 (was program 35, was adjustment 30). Reason: Clean 4×8s @ 30kg RPE 8 on Day 4. Auto-expire: 1 clean session ≥ 4×7s at 32.5kg, RPE ≤ 8. (set 2026-06-09)
-- **oapu.progression** — "asymmetric: back-3-finger one arm / full-grip other" (was program "5-finger"). Reason: User in transition to 1-arm progression. Auto-expire: when user moves to 1-arm 2-finger or true 2-finger both sides. (set 2026-06-09)
-- **db-ohp.load_kg** — 17.5 (was program 20). Reason: Day 6 actual 7/6/5/4 @ 17.5 RPE 9 — only set 1 hit 7, tail-off through 4. Adjustment did not clean; hold. If Day 8 push also fails 4×7 @ 17.5 → deload to 15kg. (set 2026-06-04, last reviewed 2026-06-10)
+_(none — the 2026-06-10 program rebase absorbed all prior adjustments into the Phase 1 baseline: fingerboard 32.5kg, OHP 17.5kg, OAPU asymmetric progression are now the program itself.)_
 
 ## Watchlist
 
-- **lateral-raises 6kg test** — adjustment expired (equipment available). Restoring program 6kg next push. 4×15 @ 5 was clean RPE 8 — if 6kg drops below 4×15 or RPE jumps to 9+, back off.
-- **weighted-dips degradation** — 8/8/5 (Day 3) → 8/7/5 (Day 6). Set 2 starting to drop too. Hold 20kg one more push. If 8/7/5 or worse, deload to 17.5kg or cut to 2 sets.
-- **back-to-back upper-body fatigue** — Tue Bulgarian RPE 9 + Wed Dips/OHP RPE 9 on Day 5/6. May explain OHP "weaker now" comment. Watch if pattern repeats on next Tue/Wed pair.
-- **toes-to-bar regression** — 6/6/5 (Day 3) → 6/6/4 (Day 6). Set 3 dropping. Hold 3×6, if degrades again consider rep target reduction or assist.
-- **sleep + mood trajectory** — Day 1-4: 6h (with Day 2 unlogged). Day 5: 6h, mood 2. Day 6: **8h** ✓, mood 3. First extended sleep. Watch correlation if next session at 6h drops capacity.
-- **db-ohp recovery** — failed Day 6. Track Day 8 at 17.5; deload if fails again.
-- **explosive-pushups schema** — RESOLVED with v15 (added `clapping_reps` optional column to plyo set_table). Future explosive push-ups log total reps + clapping subset separately.
-- **front-lever progression** — 12/12/10 (Day 2) → 12/12/11 (Day 4). Trending up at Adv tuck. If next climbing day lands 12/12/12, test Phase 2 one-leg progression.
-- **bulgarian-split-squat** — Day 5 17.5kg × 3×8 RPE 9, "still heavy but getting there." Hold one more session before considering bump.
-- **copenhagen-hip-dips** — Day 5 dynamic 3×5+5 "getting easy maybe I can increase rep." Soft bump candidate; Phase 2 prescribes 3×8+8.
-- **pinch-block headroom** — Day 4 3×12s @ 20kg RPE 7. Phase 2 prescription is 22kg. Bump candidate.
+- **arc-protocol drift** — Day 7 ARC ran at 80% effort with 3 falls and "push to failure" vs prescribed 55% / 0 falls. ARC trains the aerobic base only when it's continuous easy climbing; at 80% it becomes power-endurance and steals recovery from Thu kilter. Next ARC: drop to routes you can climb without falling, stay on the wall, target ~55%.
+- **pre-session form on PM sessions** — ARC logged with sleep/mood/soreness zeros. AM sessions get real values; PM sessions don't. Acceptable (sleep was already logged that morning) but mood pre-climb is useful — fill if convenient.
+- **lateral-raises 6kg test** — next push: program is 6kg now. If below 4×15 or RPE 9+, back off.
+- **weighted-dips degradation** — 8/8/5 (Day 3) → 8/7/5 (Day 6). Hold 20kg one more push; if it degrades again, deload to 17.5kg or cut to 2 sets.
+- **db-ohp recovery** — Day 6 failed 4×7 @ 17.5 (7/6/5/4 RPE 9). Program now prescribes 17.5; if next push fails again → deload to 15kg.
+- **back-to-back upper-body fatigue** — Tue/Wed pair both at RPE 9 on upper movements. Watch next pair.
+- **toes-to-bar regression** — 6/6/5 → 6/6/4. Hold 3×6.
+- **sleep + mood trajectory** — 6h/6h/6h/6h/8h across logged AM sessions; mood 3/2/3/2/3. One 8h night so far.
+- **front-lever progression** — 12/12/10 → 12/12/11. If next climbing day lands 12/12/12, test one-leg.
+- **bulgarian-split-squat** — 17.5kg 3×8 RPE 9. Hold.
+- **copenhagen-hip-dips** — "getting easy," soft bump candidate (P2 is 3×8+8).
+- **pinch-block headroom** — RPE 7 at 20kg. Bump candidate (P2 is 22kg).
 
 ## Sessions
 
@@ -33,7 +32,294 @@
 - duration_min: 20 · grade_range: 6b+ - 6c+ · effort_pct: 80 · falls: 3
 - Notes: Can only do three routes. right now. But I was able to push to failure and climb to top on all three
 
+### 2026-06-10 — Wed — Push Hypertrophy + Core + ER
+
+**Phase:** 1 · **Week:** 3 · **Sleep prev night:** 8h · **Mood:** 3/5 · **Body:** —
+
+**Block A — Weighted Dips** _(weighted_reps)_
+- Set 1: reps: 8 · load_kg: 20
+- Set 2: reps: 7 · load_kg: 20
+- Set 3: reps: 5 · load_kg: 20
+- rpe: 9
+- Notes: Good weight I think. On the 2nd set I just about to do 8 reps but failed. And third set is just that.
+
+**Block B — DB Overhead Press** _(weighted_reps)_
+- Set 1: reps: 7 · load_kg: 17.5
+- Set 2: reps: 6 · load_kg: 17.5
+- Set 3: reps: 5 · load_kg: 17.5
+- Set 4: reps: 4 · load_kg: 17.5
+- rpe: 9
+- Notes: Still felt hard to get 20kg needs more exposure to it. Maybe I'm weaker now
+
+**Block C — Lateral Raises** _(weighted_reps)_
+- Set 1: reps: 15 · load_kg: 5
+- Set 2: reps: 15 · load_kg: 5
+- Set 3: reps: 15 · load_kg: 5
+- Set 4: reps: 15 · load_kg: 5
+- rpe: 8
+- Notes: Felt slight burning on a second set but so far so good then getting a little bit harder on the third set onward. 6kg might be a better training.
+
+**Block D — Explosive push-ups** _(plyo)_
+- Set 1: reps: 8
+- Set 2: reps: 6
+- Set 3: reps: 3
+- Set 4: reps: 1
+- rpe: 9
+- Notes: Same as last time where I do clap push up first then follow by normal explosive push-up if I couldn't do anymore of the clap. From the second set to the last set, i did till 8 reps
+
+**Block E — Dragon Flag** _(weighted_reps)_
+- Set 1: reps: 5 · load_kg: 0
+- Set 2: reps: 5 · load_kg: 0
+- Set 3: reps: 5 · load_kg: 0
+- rpe: 8
+
+**Block F — Toes-to-Bar** _(weighted_reps)_
+- Set 1: reps: 6 · load_kg: 0
+- Set 2: reps: 6 · load_kg: 0
+- Set 3: reps: 4 · load_kg: 0
+- rpe: 8
+- Notes: Felt good on this reps range now. I can do toe to bar cleanly for 2 sets now. On the last set i can only do 4 so I finish with just leg lift another two reps.
+
+**Block G — Shoulder External Rotation (Side-lying Dumbbell)** _(shoulder_er)_
+- Set 1: reps: 12 · load_kg: 7
+- Set 2: reps: 12 · load_kg: 7
+- position: 1 · rpe: 8
+- Notes: Felt pretty good.
+
+### 2026-06-09 — Tue — Lower Power + Nordics + Plyos
+
+**Phase:** 1 · **Week:** 3 · **Sleep prev night:** 6h · **Mood:** 2/5 · **Body:** —
+
+**Block A — Nordic Curls** _(tempo_eccentric)_
+- Set 1: reps: 5 · load_kg: 0
+- Set 2: reps: 5 · load_kg: 0
+- Set 3: reps: 5 · load_kg: 0
+- variation: ecc-only · eccentric_seconds: 5 · rpe: 8
+- Notes: Getting a little easier.
+
+**Block B — Box jumps** _(plyo)_
+- Set 1: reps: 8
+- Set 2: reps: 8
+- Set 3: reps: 8
+- rpe: 8
+- Notes: Can do three sets clearly on level 7
+
+**Block C — Depth jumps** _(plyo)_
+- Set 1: reps: 5
+- Set 2: reps: 5
+- Set 3: reps: 5
+- rpe: 8
+- Notes: Doing five on each side for the depth and jump with both feet so total 10 reps per set. Getting okay doing level 6 for the jump. And level two for the depth
+
+**Block D — Single-leg bounds** _(bodyweight_reps_per_side)_
+- Set 1: reps_left: 6 · reps_right: 6
+- Set 2: reps_left: 6 · reps_right: 6
+- Set 3: reps_left: 6 · reps_right: 6
+- progression: Standard
+- Notes: Feeling very okay
+
+**Block E — Bulgarian Split Squats (per leg)** _(weighted_reps)_
+- Set 1: reps: 8 · load_kg: 17.5
+- Set 2: reps: 8 · load_kg: 17.5
+- Set 3: reps: 8 · load_kg: 17.5
+- rpe: 9
+- Notes: Still feel free heavy but getting there
+
+**Block F — Copenhagen Hip Dips** _(bodyweight_reps_per_side)_
+- Set 1: reps_left: 5 · reps_right: 5
+- Set 2: reps_left: 5 · reps_right: 5
+- Set 3: reps_left: 5 · reps_right: 5
+- progression: Dynamic
+- Notes: Getting easy maybe I can increase rep next session
+
+**Block G — Shoulder External Rotation (Side-lying Dumbbell)** _(shoulder_er)_
+- Set 1: reps: 12 · load_kg: 7
+- Set 2: reps: 12 · load_kg: 7
+- position: 1 · rpe: 8
+
+### 2026-06-08 — Mon — Climbing Strength + Skills + Prehab
+
+**Phase:** 1 · **Week:** 3 · **Sleep prev night:** 6h · **Mood:** 3/5 · **Body:** —
+
+**Block @ — Front Lever progression** _(bodyweight_time)_
+- Set 1: hold_seconds: 12
+- Set 2: hold_seconds: 12
+- Set 3: hold_seconds: 11
+- stage: Adv tuck
+- Notes: Getting easier on the first two set.
+
+**Block @ — OAPU finger-drop** _(bodyweight_reps_per_side)_
+- Set 1: reps_left: 3 · reps_right: 3
+- Set 2: reps_left: 3 · reps_right: 3
+- Set 3: reps_left: 3 · reps_right: 3
+- progression: Back 3 fingers (middle, ring, pinky) one arm and full hand on another
+- Notes: Back Free is getting easier. Maybe next session we can do one hand to fingers
+
+**Block @ — Fingerboard MaxHangs (20mm)** _(weighted_time)_
+- Set 1: hold_seconds: 8 · load_kg: 30
+- Set 2: hold_seconds: 8 · load_kg: 30
+- Set 3: hold_seconds: 8 · load_kg: 30
+- Set 4: hold_seconds: 8 · load_kg: 30
+- rpe: 8
+- Notes: Felt pretty good at this weight. We can op to 32.5 kgs
+
+**Block @ — Pinch Block** _(weighted_time_asymmetric)_
+- Set 1: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- Set 2: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- Set 3: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- rpe: 7
+
+**Block @ — Weighted Pull-Ups** _(weighted_reps)_
+- Set 1: reps: 7 · load_kg: 22.5
+- Set 2: reps: 7 · load_kg: 22.5
+- Set 3: reps: 7 · load_kg: 22.5
+- rpe: 8
+
+**Block @ — Shoulder External Rotation (Side-lying Dumbbell)** _(shoulder_er)_
+- Notes: (skipped)
+
+**Block @ — Reverse Wrist Curls** _(weighted_reps)_
+- Notes: (skipped)
+
+### 2026-06-04 — Thu — Push Hypertrophy + Core + ER
+
+**Phase:** 1 · **Week:** 2 · **Sleep prev night:** 6h · **Mood:** 2/5 · **Body:** —
+
+**Block @ — Weighted Dips** _(weighted_reps)_
+- Set 1: reps: 8 · load_kg: 20
+- Set 2: reps: 8 · load_kg: 20
+- Set 3: reps: 5 · load_kg: 20
+- rpe: 9
+- Notes: Failed in the last set
+
+**Block @ — DB Overhead Press** _(weighted_reps)_
+- Set 1: reps: 7 · load_kg: 20
+- Set 2: reps: 4 · load_kg: 20
+- Set 3: reps: 5 · load_kg: 17.5
+- Set 4: reps: 5 · load_kg: 17.5
+- rpe: 10
+- Notes: Still felt hard to get 20kg needs more exposure to it.
+
+**Block @ — Lateral Raises** _(weighted_reps)_
+- Set 1: reps: 15 · load_kg: 5
+- Set 2: reps: 15 · load_kg: 5
+- Set 3: reps: 15 · load_kg: 5
+- Set 4: reps: 15 · load_kg: 5
+- rpe: 8
+- Notes: Feel pretty good but maybe next time I'll use 6kg today only 5kg is available
+
+**Block @ — Explosive push-ups** _(plyo)_
+- Set 1: reps: 5
+- Set 2: reps: 4
+- Set 3: reps: 2
+- Set 4: reps: 1
+- rpe: 9
+- Notes: I only count the one that I can do clapping push up. But I did total of it reps by filling the rest with normal push-up till 8 reps. Like first set is 5 clapping and 3 no clapping and so on.
+
+**Block @ — Dragon Flag** _(weighted_reps)_
+- Set 1: reps: 5 · load_kg: 0
+- Set 2: reps: 5 · load_kg: 0
+- Set 3: reps: 5 · load_kg: 0
+- rpe: 8
+- Notes: Felt good
+
+**Block @ — Toes-to-Bar** _(weighted_reps)_
+- Set 1: reps: 6 · load_kg: 0
+- Set 2: reps: 6 · load_kg: 0
+- Set 3: reps: 5 · load_kg: 0
+- rpe: 9
+- Notes: failed just shy off the last set. But good
+
+**Block @ — Shoulder External Rotation (Side-lying Dumbbell)** _(shoulder_er)_
+- Set 1: reps: 12 · load_kg: 7
+- Set 2: reps: 12 · load_kg: 7
+- position: 1 · rpe: 8
+- Notes: Felt good hard, I'll continue this weight for one more session
+
+### 2026-06-03 — Wed — Climbing Strength + Skills + Prehab
+
+**Phase:** 1 · **Week:** 1 · **Sleep prev night:** 0h · **Mood:** 0/5 · **Body:** —
+
+**Block @ — Front Lever progression** _(bodyweight_time)_
+- Set 1: hold_seconds: 12
+- Set 2: hold_seconds: 12
+- Set 3: hold_seconds: 10
+- stage: Adv tuck
+- Notes: Felt okay the third and the second set is pretty hard still
+
+**Block @ — OAPU finger-drop** _(bodyweight_reps_per_side)_
+- Set 1: reps_left: 3 · reps_right: 3
+- Set 2: reps_left: 3 · reps_right: 3
+- Set 3: reps_left: 3 · reps_right: 3
+- progression: Back 3 fingers (middle, ring, pinky)
+- Notes: Felt pretty heavy using the back three. Will need more exposure of this before reduce to two fingers. Maybe one more session then
+
+**Block @ — Fingerboard MaxHangs (20mm)** _(weighted_time)_
+- Set 1: hold_seconds: 5 · load_kg: 35
+- Set 2: hold_seconds: 4 · load_kg: 35
+- Set 3: hold_seconds: 3 · load_kg: 35
+- Set 4: hold_seconds: 1 · load_kg: 35
+- rpe: 10
+- Notes: Fails in the first set maybe this weight is a bit too heavy.
+
+**Block @ — Pinch Block** _(weighted_time_asymmetric)_
+- Set 1: hold_s_left: 0 · hold_s_right: 0 · load_kg: 0
+- rpe: 1
+- Notes: Skip
+
+**Block @ — Weighted Pull-Ups** _(weighted_reps)_
+- Set 1: reps: 7 · load_kg: 22.5
+- Set 2: reps: 7 · load_kg: 22.5
+- Set 3: reps: 6 · load_kg: 22.5
+- Set 4: reps: 4 · load_kg: 22.5
+- rpe: 10
+- Notes: Heavy but good weight. The later set that I can do a bit less
+
+**Block @ — Shoulder ER — Side-lying DB** _(shoulder_er)_
+- Set 1: reps: 12 · load_kg: 7
+- Set 2: reps: 12 · load_kg: 7
+- position: 1 · rpe: 7
+
+**Block @ — Reverse Wrist Curls** _(weighted_reps)_
+- Set 1: reps: 15 · load_kg: 5
+- Set 2: reps: 15 · load_kg: 5
+- Set 3: reps: 15 · load_kg: 5
+- rpe: 7
+- Notes: Quite easy on the first set and juulst a little bit burning
+
+### 2026-05-28 — Thu — Kilterboard P-E + Pull Accessories
+
+**Phase:** 1 · **Week:** 1 · **Sleep prev night:** 6h · **Mood:** 3/5 · **Body:** —
+
+**Block @ — Kilterboard 4×4** _(climbing_kilterboard)_
+- angle_deg: 30 · problems_per_block: 5 · blocks: 3 · grade_range: V4 · rest_min_between_blocks: 10
+- Notes: Felt pretty heavy and hard but 30 degrees angle felt better than 25. I can only do 5 routes on the first set four on the second block and then four are the last block
+
+**Block @ — Heavy DB Rows** _(weighted_reps)_
+- Set 1: reps: 10 · load_kg: 26
+- Set 2: reps: 10 · load_kg: 26
+- Set 3: reps: 10 · load_kg: 26
+- rpe: 9
+- Notes: Felt good but still too tired to move on to other.
+
+**Block @ — Pinch Block (balance sets)** _(weighted_time_asymmetric)_
+- Set 1: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- Set 2: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- Set 3: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- rpe: 8
+- Notes: Felt easy, maybe I'm still had to be how I left after kilter.
+
+**Block @ — Shoulder ER — Prone Y/T/W** _(shoulder_er)_
+- Notes: (skipped)
+
 ## Daily Reviews
+
+### 2026-06-10 — Wed Wk 3 — review of Day 7 (ARC) + history restore
+**Summary:** First climbing-volume session logged — the data the program actually exists for. 20min @ 6b+-6c+, but at 80% effort with 3 falls and "push to failure": that's a power-endurance session wearing an ARC costume. Prescribed ARC is ~55% effort, 0 falls, continuous movement — the adaptation (capillarization, recovery-while-climbing) only happens below the pump threshold. Next ARC: pick terrain you can't fall off, stay on the wall the full block.
+
+**Adjustments:** All three remaining adjustments (fingerboard 32.5, OHP 17.5, OAPU asymmetric) expired — the program rebase made them the Phase 1 baseline. Active list is empty for the first time; the program now equals reality.
+
+**Ops note:** GitHub-direct sync worked (this session arrived via PWA push, no upload). The sync also exposed a merge flaw — clearing site data wiped the phone's local history and the old "local owns Sessions" rule propagated the wipe to GitHub. Fixed: sessions now merge as a union (deduped by header), so neither side can erase history. Full session history restored from the Drive backup.
 
 ### 2026-06-10 — Wed Wk 3 — review of Day 5+6 (Tue Lower + Wed Push)
 
