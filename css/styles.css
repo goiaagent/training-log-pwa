@@ -155,3 +155,42 @@ code { background: var(--input-bg); padding: 2px 4px; border-radius: 4px; font-s
 
 /* Deload week banner */
 .deload-banner { background: rgba(79,158,255,.12); border: 1px solid var(--accent); border-radius: 6px; padding: 10px 12px; margin-bottom: 12px; font-size: .9rem; }
+
+/* ===== UI polish pass (v19) ===== */
+
+/* Bigger touch targets; 16px font stops iOS focus-zoom */
+input, select { min-height: 44px; font-size: 16px; }
+.set-row input { min-height: 42px; }
+.rpe-buttons button { min-width: 38px; min-height: 40px; font-size: 15px; border-radius: 8px; }
+.save-btn { width: 100%; padding: 14px; font-size: 16px; border-radius: 10px; }
+
+/* Collapsible adjustments/watchlist banner */
+.banner-collapsible { padding: 0; }
+.banner-collapsible > summary {
+  list-style: none; cursor: pointer; padding: 10px 12px;
+  font-size: 0.9rem; color: var(--muted);
+}
+.banner-collapsible > summary::-webkit-details-marker { display: none; }
+.banner-collapsible > summary::after { content: " ▾"; }
+.banner-collapsible[open] > summary::after { content: " ▴"; }
+.banner-collapsible[open] > summary { border-bottom: 1px solid var(--border); }
+.banner-collapsible h3, .banner-collapsible ul { margin-left: 12px; margin-right: 12px; }
+
+/* Session header + progress */
+.session-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.session-progress { font-size: 0.85rem; color: var(--muted); white-space: nowrap; }
+
+/* Block completion state */
+details.block summary { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px; }
+.block-check {
+  width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid var(--border); display: inline-flex;
+  align-items: center; justify-content: center; font-size: 12px;
+}
+details.block .block-name { flex: 1 1 auto; }
+details.block .block-prescribed { flex-basis: 100%; padding-left: 26px; }
+details.block .block-override { flex-basis: 100%; padding-left: 26px; color: var(--warn); font-size: 12px; }
+details.block.has-data { border-color: color-mix(in srgb, var(--accent) 55%, var(--border)); }
+details.block.has-data .block-check { border-color: var(--accent); background: var(--accent); color: #fff; }
+details.block.has-data .block-check::before { content: "✓"; }
+details.block[open] { border-color: var(--accent); }

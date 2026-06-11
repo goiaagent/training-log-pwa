@@ -205,7 +205,17 @@ function renderBanners(adjustments, watchlist) {
       .map((w) => `<li><strong>${esc(w.topic)}</strong>: ${esc(truncate(w.raw, 80))}</li>`)
       .join("")}</ul>`);
   }
-  return `<div class="banner">${parts.join("")}</div>`;
+  const summary = [
+    adjustments.length ? `⚙ ${adjustments.length} adjustment${adjustments.length === 1 ? "" : "s"}` : "",
+    watchlist.length ? `👁 ${watchlist.length} watch` : "",
+  ]
+    .filter(Boolean)
+    .join(" · ");
+  // Collapsed by default — one calm line instead of a wall of text on launch.
+  return `<details class="banner banner-collapsible">
+    <summary>${summary}</summary>
+    ${parts.join("")}
+  </details>`;
 }
 
 function renderPreSession(dateIso) {
@@ -234,8 +244,11 @@ function renderPreSession(dateIso) {
 function renderSession(sess, day, adjustments, today, dateIso, idx) {
   return `
     <section class="session" data-session-idx="${idx}" data-session-name="${esc(sess.name)}">
-      <h2>${esc(sess.name)}</h2>
-      <div class="muted">~${sess.duration_min} min</div>
+      <div class="session-head">
+        <h2>${esc(sess.name)}</h2>
+        <span class="session-progress" data-progress-for="${idx}"></span>
+      </div>
+      ${sess.duration_min ? `<div class="muted">~${sess.duration_min} min</div>` : ""}
       ${sess.blocks
         .map((block, bi) => renderBlock(block, day.phase, adjustments, today, idx, bi))
         .join("")}
@@ -252,12 +265,13 @@ function renderBlock(block, phase, adjustments, today, sessIdx, blockIdx) {
   return `
     <details class="block" data-session-idx="${sessIdx}" data-block-idx="${blockIdx}" data-type="${block.type}" data-block-id="${block.id}">
       <summary>
+        <span class="block-check" aria-hidden="true"></span>
         <span class="block-name">${esc(block.name)}</span>
         <span class="block-prescribed">${esc(prescribedSummary(prescribed))}</span>
         ${overrides.length ? `<span class="block-override">⚙ ${esc(overrideLabels)}</span>` : ""}
       </summary>
       <div class="block-form">
-        ${fields.map((f) => renderField(f, prescribed[f.name])).join("")}
+        ${fields.map((f) => renderField(f, prescribed[f.name], prescribed)).join("")}
         <button type="button" class="skip-btn" data-action="skip">Mark skipped</button>
       </div>
     </details>
@@ -271,7 +285,7 @@ function prescribedSummary(values) {
     .join(" · ");
 }
 
-function renderField(field, prescribedValue) {
+function renderField(field, prescribedValue, prescribed = {}) {
   const name = field.name;
   const label = field.label + (field.required ? "" : " (optional)");
   const ph = prescribedValue !== undefined ? `placeholder="${esc(String(prescribedValue))}"` : "";
@@ -298,8 +312,14 @@ function renderField(field, prescribedValue) {
     </div>`;
   }
   if (field.kind === "set_table") {
-    const placeholders = prescribedValue && typeof prescribedValue === "object" ? prescribedValue : {};
-    return `<div class="field set-table-field" data-field="set-table" data-field-name="${esc(name)}">
+    // Seed spec from the prescription: N rows (prescribed sets) pre-filled
+    // with the prescribed per-column values. The user edits deviations only.
+    const seedValues = {};
+    for (const col of field.columns) {
+      if (prescribed[col.name] !== undefined) seedValues[col.name] = prescribed[col.name];
+    }
+    const seed = { rows: Number(prescribed.sets) || 1, values: seedValues };
+    return `<div class="field set-table-field" data-field="set-table" data-field-name="${esc(name)}" data-seed='${esc(JSON.stringify(seed))}'>
       <div class="set-table-header">
         <span class="field-label">${label}</span>
         <button type="button" class="add-set-row">+ Add set</button>
@@ -339,10 +359,16 @@ function wireForm(root, state, dateIso, sessions, reload) {
     });
   });
 
-  // Set tables — seed with one row, wire add-row
+  // Set tables — when no draft hydrated rows, seed from the prescription:
+  // prescribed `sets` count × rows pre-filled with prescribed column values.
   root.querySelectorAll(".set-table-field").forEach((wrap) => {
     const rowsContainer = wrap.querySelector(".set-rows");
-    if (rowsContainer.children.length === 0) addSetRow(rowsContainer);
+    if (rowsContainer.children.length > 0) return;
+    let seed = { rows: 1, values: {} };
+    try {
+      seed = JSON.parse(wrap.dataset.seed);
+    } catch {}
+    for (let i = 0; i < Math.max(1, seed.rows); i++) addSetRow(rowsContainer, seed.values);
   });
   root.querySelectorAll(".add-set-row").forEach((btn) => {
     btn.addEventListener("click", () => {
@@ -464,7 +490,35 @@ function wireForm(root, state, dateIso, sessions, reload) {
 
   function persistDraft() {
     saveDraft(dateIso, extractDraft(root));
+    updateProgress();
   }
+
+  // Per-block ✓ + "n/m logged" per session. A block counts once it's skipped,
+  // has an RPE selected, or has any user-touched input (set tables are seeded
+  // with prescribed values, so plain inputs only count after a real edit —
+  // the RPE tap is the natural "I did this block" signal).
+  function updateProgress() {
+    root.querySelectorAll(".session").forEach((sessEl) => {
+      let done = 0;
+      const blocks = sessEl.querySelectorAll(".block");
+      blocks.forEach((b) => {
+        const skipped = b.dataset.skipped === "true";
+        const rpeDone = Array.from(b.querySelectorAll(".rpe-buttons")).some((g) => g.dataset.value);
+        const touched = Array.from(b.querySelectorAll("input, select")).some(
+          (el) => el.dataset.touched === "1" && el.value !== "",
+        );
+        const hasData = skipped || rpeDone || touched;
+        b.classList.toggle("has-data", hasData);
+        if (hasData) done++;
+      });
+      const label = sessEl.querySelector(".session-progress");
+      if (label) label.textContent = `${done}/${blocks.length} logged`;
+    });
+  }
+  root.addEventListener("input", (e) => {
+    if (e.target.matches("input, select")) e.target.dataset.touched = "1";
+  });
+  updateProgress();
 }
 
 function addSetRow(container, values = {}) {
