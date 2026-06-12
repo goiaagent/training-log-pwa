@@ -1,11 +1,13 @@
 # Hybrid Athlete Training Log
 
 **Program start:** 2026-05-25
-**Last updated:** 2026-06-10 (Day 7 review — ARC + history restore)
+**Last updated:** 2026-06-12 (Day 8 review — Kilterboard)
 
 ## Active Adjustments
 
-_(none — the 2026-06-10 program rebase absorbed all prior adjustments into the Phase 1 baseline: fingerboard 32.5kg, OHP 17.5kg, OAPU asymmetric progression are now the program itself.)_
+- **db-rows.load_kg** — 28 (was program 26). Reason: Day 8 3×10 @ 26 at RPE 8, down from RPE 9 on Day 1 with no fatigue complaint — Day-1 progression condition met. Auto-expire: 1 clean session of 3×10 @ 28 at RPE ≤ 8. (set 2026-06-12)
+- **pinch-block-balance.load_kg** — 22 (was program 20). Reason: RPE 8 → 7 across two sessions, "feel solid" on the fresh-body retest. Auto-expire: 1 clean session of 3×12s/side @ 22 at RPE ≤ 8. (set 2026-06-12)
+- **pinch-block.load_kg** — 22 (was program 20). Reason: Day 4 read RPE 7 at 20kg with headroom noted. Finger guardrail caveat: two pinch bumps in one review — if either pinch block reads RPE 9+ next exposure, drop both back to 20. Auto-expire: 1 clean session of 3×12s/side @ 22 at RPE ≤ 8. (set 2026-06-12)
 
 ## Watchlist
 
@@ -16,11 +18,12 @@ _(none — the 2026-06-10 program rebase absorbed all prior adjustments into the
 - **db-ohp recovery** — Day 6 failed 4×7 @ 17.5 (7/6/5/4 RPE 9). Program now prescribes 17.5; if next push fails again → deload to 15kg.
 - **back-to-back upper-body fatigue** — Tue/Wed pair both at RPE 9 on upper movements. Watch next pair.
 - **toes-to-bar regression** — 6/6/5 → 6/6/4. Hold 3×6.
-- **sleep + mood trajectory** — 6h/6h/6h/6h/8h across logged AM sessions; mood 3/2/3/2/3. One 8h night so far.
+- **kilterboard one-shy** — Day 8: 5/5/4 @ V4/30° RPE 8 (Day 1 was 5/4/4). First clean 5/5/5 at RPE ≤ 8 unlocks P2 volume (3×6). (Set-3 grade logged as "V" — treated as V4 typo.)
+- **sleep + mood trajectory** — 6h/6h/6h/6h/8h/6h across logged AM sessions; mood 3/2/3/2/3/3. The single 8h night didn't stick. Still the cheapest gain available.
 - **front-lever progression** — 12/12/10 → 12/12/11. If next climbing day lands 12/12/12, test one-leg.
 - **bulgarian-split-squat** — 17.5kg 3×8 RPE 9. Hold.
 - **copenhagen-hip-dips** — "getting easy," soft bump candidate (P2 is 3×8+8).
-- **pinch-block headroom** — RPE 7 at 20kg. Bump candidate (P2 is 22kg).
+- **saturday project sessions** — still zero entries. The program's entire goal (Vietnam, Oct) has no data. Log grades + burns + one note.
 
 ## Sessions
 
@@ -345,6 +348,18 @@ _(none — the 2026-06-10 program rebase absorbed all prior adjustments into the
 - Notes: (skipped)
 
 ## Daily Reviews
+
+### 2026-06-12 — Fri Wk 3 — review of Day 8 (Kilterboard P-E)
+**Summary:** Best-executed session of the program. First session ever with zero skips. ER done at its new top-of-session slot (2×12 @ 7kg RPE 7, "good burn") — the structural fix worked on first exposure after going 0-for-3. Kilter 5/5/4 @ V4/30° RPE 8, failed only the very last route (Day 1 was 5/4/4 with "heavy and hard"). DB rows 3×10 @ 26 at RPE 8, down from 9. Pinch balance 3×12s @ 20 RPE 7, "feel solid." Rest day Thursday before this (kilter shifted Thu→Fri via picker) — and the whole session reads fresher for it.
+
+**Adjustments (2 progressions earned, 1 piggyback):**
+- DB rows 26 → 28kg (Day-1 condition met: RPE dropped into band).
+- Pinch balance 20 → 22kg (two clean reads + fresh-body test).
+- Monday pinch-block 20 → 22kg (RPE 7 on Day 4; revert both pinches to 20 if either reads 9+).
+
+**Holds:** Kilter at 3×5 @ V4 — one route shy of clean. ER at 7kg (user wants one more session before bumping).
+
+**Patterns:** Soreness logged for the first time (2/5) — pre-session form fully working. The fatigue-carryover pattern from Days 1-4 looks beaten: ER-first ordering + a genuine rest day produced a session where even the last block read RPE 7. Sleep back to 6h — the 8h night was a one-off; it remains the highest-leverage variable in the whole log.
 
 ### 2026-06-10 — Wed Wk 3 — review of Day 7 (ARC) + history restore
 **Summary:** First climbing-volume session logged — the data the program actually exists for. 20min @ 6b+-6c+, but at 80% effort with 3 falls and "push to failure": that's a power-endurance session wearing an ARC costume. Prescribed ARC is ~55% effort, 0 falls, continuous movement — the adaptation (capillarization, recovery-while-climbing) only happens below the pump threshold. Next ARC: pick terrain you can't fall off, stay on the wall the full block.
