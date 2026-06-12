@@ -24,6 +24,38 @@ _(none — the 2026-06-10 program rebase absorbed all prior adjustments into the
 
 ## Sessions
 
+### 2026-06-12 — Fri — Kilterboard P-E + Pull Accessories
+
+**Phase:** 1 · **Week:** 3 · **Sleep prev night:** 6h · **Mood:** 3/5 · **Soreness:** 2/5 · **Body:** —
+
+**Block A — Shoulder External Rotation (Side-lying Dumbbell)** _(shoulder_er)_
+- Set 1: reps: 12 · load_kg: 7
+- Set 2: reps: 12 · load_kg: 7
+- position: 1 · rpe: 7
+- Notes: Good burn
+
+**Block B — Kilterboard 4×4** _(climbing_kilterboard)_
+- Set 1: grade: V4 · routes_climbed: 5
+- Set 2: grade: V4 · routes_climbed: 5
+- Set 3: grade: V · routes_climbed: 4
+- angle_deg: 30 · rest_min_between_blocks: 10 · rpe: 8
+- Notes: The first block feel quite solid. Failed at the very last route
+
+**Block C — Heavy DB Rows** _(weighted_reps)_
+- Set 1: reps: 10 · load_kg: 26
+- Set 2: reps: 10 · load_kg: 26
+- Set 3: reps: 10 · load_kg: 26
+- rpe: 8
+
+**Block D — Pinch Block (balance sets)** _(weighted_time_asymmetric)_
+- Set 1: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- Set 2: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- Set 3: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- rpe: 7
+- Notes: Feel solid
+
+**Global notes:** Took yesterday off and try today should be better.
+
 ### 2026-06-10 — Wed — ARC Climbing with friend (mandatory)
 
 **Phase:** 1 · **Week:** 3 · **Sleep prev night:** 0h · **Mood:** 0/5 · **Soreness:** 0/5 · **Body:** —
