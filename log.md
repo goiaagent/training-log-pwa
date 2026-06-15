@@ -27,6 +27,62 @@
 
 ## Sessions
 
+### 2026-06-15 — Mon — Climbing Strength + Skills + Prehab
+
+**Phase:** 1 · **Week:** 4 · **Sleep prev night:** 6h · **Mood:** 2/5 · **Soreness:** 1/5 · **Body:** —
+
+**Block A — Shoulder External Rotation (Side-lying Dumbbell)** _(shoulder_er)_
+- Set 1: reps: 12 · load_kg: 7
+- Set 2: reps: 12 · load_kg: 7
+- position: 1 · rpe: 7
+- Notes: Felt okay
+
+**Block B — Reverse Wrist Curls** _(weighted_reps)_
+- Set 1: reps: 15 · load_kg: 5
+- Set 2: reps: 15 · load_kg: 5
+- Set 3: reps: 15 · load_kg: 5
+- rpe: 7
+- Notes: Felt okay.
+
+**Block C — Front Lever progression** _(bodyweight_time)_
+- Set 1: hold_seconds: 12
+- Set 2: hold_seconds: 12
+- Set 3: hold_seconds: 10
+- stage: Adv tuck
+- Notes: The forearm are a bit fatigued from the earlier
+
+**Block D — OAPU finger-drop** _(bodyweight_reps_per_side)_
+- Set 1: reps_left: 3 · reps_right: 3
+- Set 2: reps_left: 3 · reps_right: 3
+- Set 3: reps_left: 3 · reps_right: 3
+- progression: Back 3 fingers ( middle, ring, pinky)
+- Notes: Felt easier now. Maybe we can move to 2fingers one hand and full in the other
+
+**Block E — Fingerboard MaxHangs (20mm)** _(weighted_time)_
+- Set 1: hold_seconds: 8 · load_kg: 32.5
+- Set 2: hold_seconds: 1 · load_kg: 32.5
+- Set 3: hold_seconds: 1 · load_kg: 32.5
+- Set 4: hold_seconds: 1 · load_kg: 32.5
+- rpe: 10
+- Notes: Failed right on after the 2nd set. Even the first it is very hard
+
+**Block F — Pinch Block** _(weighted_time_asymmetric)_
+- Set 1: hold_s_left: 8 · hold_s_right: 8 · load_kg: 22.5
+- Set 2: hold_s_left: 1 · hold_s_right: 2 · load_kg: 22.5
+- Set 3: hold_s_left: 0 · hold_s_right: 0 · load_kg: 22.5
+- rpe: 10
+- Notes: Only 2.5 kg plate available so it was step up. I can fail right after the first hit.
+
+**Block G — Weighted Pull-Ups** _(weighted_reps)_
+- Set 1: reps: 7 · load_kg: 22.5
+- Set 2: reps: 7 · load_kg: 22.5
+- Set 3: reps: 7 · load_kg: 22.5
+- Set 4: reps: 6 · load_kg: 22.5
+- rpe: 8
+- Notes: Felt okay but failed on the very last.
+
+**Global notes:** Didn't do anything much on the weekend so feeling fresh but doesnt feel like it.
+
 ### 2026-06-12 — Fri — Kilterboard P-E + Pull Accessories
 
 **Phase:** 1 · **Week:** 3 · **Sleep prev night:** 6h · **Mood:** 3/5 · **Soreness:** 2/5 · **Body:** —
