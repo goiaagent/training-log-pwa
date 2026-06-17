@@ -1,7 +1,7 @@
 # Hybrid Athlete Training Log
 
 **Program start:** 2026-05-25
-**Last updated:** 2026-06-15 (Day 9 review — under-recovery, deload pulled forward)
+**Last updated:** 2026-06-17 (Day 10 — first project data; week restructured)
 
 ## Active Adjustments
 
@@ -10,10 +10,9 @@
 - **pinch-block-balance.load_kg** — 20 (revert; was adjustment 22). Reason: same guardrail — both pinch loads revert together. (set 2026-06-15)
 - **db-rows.load_kg** — 28 (was program 26). Held — pull movement, untested since Day 8, not implicated in the finger collapse. Don't progress further until past the deload. Auto-expire: 1 clean session of 3×10 @ 28 at RPE ≤ 8. (set 2026-06-12)
 
-## Watchlist
-
-- **🛌 DELOAD NOW (pulled forward from Wk 6 to Wk 4)** — Day 9 finger collapse + "feel weak despite a rest weekend" = systemic under-recovery, not a calibration miss. Take 2-3 days fully off (no hangs, no max climbing), prioritise sleep, then return at deload intensity: ~60% volume, finger work easy and submaximal, RPE ≤ 7. Retest fingerboard at 30kg only when it feels normal. Deload weeks now 4/12/18 (was 6/12/18).
-- **🚨 sleep is the root cause, not a footnote** — FOUR weeks at 6h. Maximal strength is the first thing chronic sleep debt takes, and it just took it. This is the single highest-leverage change available and it costs nothing. Target 7.5h+. If you fix one variable this month, fix this.
+- **📅 WEEK 4 RESTRUCTURED (athlete-adjusted, not off-protocol)** — leg day got missed, so the week was rebuilt: Wed project (done), Thu push + leg (double), Fri kilterboard, Sat-Sun rest, resume normal Mon 6/22. Don't flag Thu/Fri as schedule drift — this is intentional. Caveat: this stopped being a true deload the moment a 7b+ project went in. That's a defensible call (mood rebounded, body responded) but it means the recovery debt is being paid down on Sat-Sun instead — so those rest days are NOT optional this time.
+- **🛌 deload status** — the planned Wk-4 deload effectively became "2 easy days + climb hard." Acute under-recovery looks resolved (mood 2→4, good on a hard project). But for Thu's push+leg: keep it RPE ≤ 7, no PR chasing — the climbing (project + Fri kilter) is the priority, the lifting is accessory this week. Don't let Thursday rob Friday.
+- **🚨 sleep is STILL the root cause** — even on a great-mood day, the Day-10 warmup (6b+/6c) "felt a bit too heavy." That's residual fatigue talking, and it traces to the same place: still 6h. You rebounded *despite* the sleep, not because it's fixed. Hard climbing on 6h is borrowing against next week. Target 7.5h+ — this is the one lever that hasn't moved in 4 weeks.
 - **under-eating / illness check** — weak-despite-rest + mood 2/5 can also come from eating too little for 5-6 sessions/week, or something viral brewing. Not a diagnosis — just worth a look alongside the sleep fix.
 - **arc-protocol drift** — Day 7 ARC ran at 80% effort with 3 falls and "push to failure" vs prescribed 55% / 0 falls. ARC trains the aerobic base only when it's continuous easy climbing; at 80% it becomes power-endurance and steals recovery from Thu kilter. Next ARC: drop to routes you can climb without falling, stay on the wall, target ~55%.
 - **pre-session form on PM sessions** — ARC logged with sleep/mood/soreness zeros. AM sessions get real values; PM sessions don't. Acceptable (sleep was already logged that morning) but mood pre-climb is useful — fill if convenient.
@@ -27,7 +26,7 @@
 - **OAPU ready to progress** — Day 9 "felt easier, maybe move to 2-finger one hand." Genuine progress signal, but DON'T add finger intensity mid-under-recovery. Bank it; revisit after the deload.
 - **bulgarian-split-squat** — 17.5kg 3×8 RPE 9. Hold.
 - **copenhagen-hip-dips** — "getting easy," soft bump candidate (P2 is 3×8+8).
-- **saturday project sessions** — still zero entries. The program's entire goal (Vietnam, Oct) has no data. Log grades + burns + one note.
+- **project benchmark = 7b+** — Day 10 first attempt on a 7b+ ("Red"), fell just below the top, burn 1, "felt good but need body tension + body awareness." Strong benchmark for the Vietnam goal. Two coaching notes: (1) log every burn next time, not just one — burn-by-burn highpoint is the real progress signal on a project; (2) "shut down near the top" + "need body tension" is an endurance/tension gap, which is exactly what a properly-run ARC (the ~55% kind, not the 80% you've been doing) and project mileage build. The pieces connect.
 
 ## Sessions
 
@@ -416,6 +415,17 @@
 - Notes: (skipped)
 
 ## Daily Reviews
+
+### 2026-06-17 — Wed Wk 4 — Day 10 (Hard Sport Climbing, Project) — FIRST PROJECT DATA
+**Summary:** The session this whole program is built around finally has data — and it's a good one. First attempt on a **7b+ ("Red"), burn 1, fell just below the top**: "felt good on it, need better body awareness and a lot of body tension." Warmed up on 6b+/6c (noted as "a bit too heavy"). 140 min. Mood **4/5** — a two-day rebound from Monday's 2/5, soreness 2/5, sleep still 6h.
+
+**The recovery read:** Monday was a systemic-under-recovery collapse; Tuesday rest; Wednesday felt good enough to project hard and *send-attempt* a 7b+. That arc confirms Monday's episode was acute and is resolving — fingers and CNS came back with two easy days, exactly as expected for the no-pain branch. Encouraging.
+
+**The honest caveat:** projecting a 7b+ is not a deload. The Wk-4 deload effectively became "two easy days then climb hard." Defensible — the body clearly responded — but the sleep debt that caused Monday hasn't been paid; even today's warmup "felt heavy." So the recovery now has to come on the Sat-Sun rest the athlete is planning. Those rest days are load-bearing this week, not optional.
+
+**Climbing analysis:** Falling at the top of a project with a "need body tension / body awareness" note is an endurance-and-tension limitation, not a finger-strength one (finger max is being trained separately on the board). This is precisely what continuous ARC at ~55% builds — and ARC has been run at 80%/to-failure so far, training the wrong system. Fixing the ARC protocol is now directly tied to the project goal. Also: log every burn next session, not just one — highpoint-per-burn is the metric that shows project progress.
+
+**Schedule:** Week restructured by athlete (leg day was missed). Thu = push + leg, Fri = kilter, Sat-Sun rest, resume Mon 6/22. Thu lifting capped at RPE ≤ 7 (accessory; protect Friday's kilter).
 
 ### 2026-06-15 — Mon Wk 4 — review of Day 9 (Climbing Strength) — UNDER-RECOVERY
 **Summary:** "I feel weak" — and the data agrees. The signature is unmistakable: gross pulling strength held (pull-ups 7/7/7/6 @ 22.5, RPE 8, on plan) while maximal finger strength collapsed completely — fingerboard 8/1/1/1s @ 32.5 RPE 10, pinch 8/1/0s @ 22.5 RPE 10. Confirmed with user: **no pain anywhere**, just inability to generate force ("couldn't lift my feet to load the hold"). That rules out a pulley/tendon injury and points squarely at systemic under-recovery — which always hits the slowest-recovering tissue (finger connective tissue) first.
