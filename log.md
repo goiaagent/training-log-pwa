@@ -31,6 +31,14 @@
 
 ## Sessions
 
+### 2026-06-17 — Wed — Hard Sport Climbing (Project)
+
+**Phase:** 1 · **Week:** 4 · **Sleep prev night:** 6h · **Mood:** 4/5 · **Soreness:** 2/5 · **Body:** —
+
+**Block A — Projecting** _(climbing_project)_
+- session_duration_min: 140 · overall_notes: Warm up on 6b+ &6c. Maybe Abit too heavy
+- Attempt 1: grade: 7b+ · burn_number: 1 · result: fell · route_name: Red · notes: Felt good on it but need better body awareness during the climb and a lot of body tension. Got shutdown just before reaching the top.
+
 ### 2026-06-15 — Mon — Climbing Strength + Skills + Prehab
 
 **Phase:** 1 · **Week:** 4 · **Sleep prev night:** 6h · **Mood:** 2/5 · **Soreness:** 1/5 · **Body:** —
