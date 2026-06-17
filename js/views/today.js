@@ -379,24 +379,41 @@ function wireForm(root, state, dateIso, sessions, reload) {
     });
   });
 
-  // Attempts list (climbing_project)
+  // Attempts list (climbing_project) — one labeled card per attempt so the
+  // fields are legible on a phone instead of crammed into a single row.
   root.querySelectorAll(".add-attempt").forEach((btn) => {
     btn.addEventListener("click", () => {
       const list = btn.previousElementSibling;
+      const n = list.children.length + 1;
       const row = document.createElement("div");
       row.className = "attempt-row";
       row.innerHTML = `
-        <input type="text" placeholder="Grade (7c)" data-attempt="grade">
-        <input type="text" placeholder="Route" data-attempt="route_name">
-        <select data-attempt="result">
-          <option value="flash">flash</option>
-          <option value="send">send</option>
-          <option value="fell">fell</option>
-          <option value="dab">dab</option>
-        </select>
-        <input type="number" placeholder="Burn#" data-attempt="burn_number" inputmode="numeric">
-        <input type="text" placeholder="Notes" data-attempt="notes">
-        <button type="button" data-action="remove-attempt">×</button>
+        <div class="attempt-head">
+          <span class="attempt-num">Attempt ${n}</span>
+          <button type="button" data-action="remove-attempt" aria-label="Remove attempt">×</button>
+        </div>
+        <div class="attempt-grid">
+          <label class="attempt-field">Grade
+            <input type="text" placeholder="7c" data-attempt="grade">
+          </label>
+          <label class="attempt-field">Burn #
+            <input type="number" placeholder="1" data-attempt="burn_number" inputmode="numeric">
+          </label>
+          <label class="attempt-field">Result
+            <select data-attempt="result">
+              <option value="flash">flash</option>
+              <option value="send">send</option>
+              <option value="fell">fell</option>
+              <option value="dab">dab</option>
+            </select>
+          </label>
+          <label class="attempt-field">Route
+            <input type="text" placeholder="name" data-attempt="route_name">
+          </label>
+        </div>
+        <label class="attempt-field attempt-notes">Notes
+          <input type="text" placeholder="how it felt, where you fell…" data-attempt="notes">
+        </label>
       `;
       list.appendChild(row);
       persistDraft();
@@ -423,7 +440,13 @@ function wireForm(root, state, dateIso, sessions, reload) {
       return;
     }
     if (action === "remove-attempt") {
+      const list = actionEl.closest(".attempts-list");
       actionEl.closest(".attempt-row").remove();
+      if (list) {
+        list.querySelectorAll(".attempt-row .attempt-num").forEach((el, i) => {
+          el.textContent = `Attempt ${i + 1}`;
+        });
+      }
       persistDraft();
       return;
     }

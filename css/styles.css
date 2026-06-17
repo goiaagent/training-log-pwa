@@ -111,10 +111,16 @@ details.block summary::-webkit-details-marker { display: none; }
 .reviews-toggle button { flex: 1; padding: 10px; background: var(--input-bg); color: var(--fg); border: 1px solid var(--border); border-radius: 6px; }
 .reviews-toggle button.active { background: var(--accent); color: white; border-color: var(--accent); }
 
-.attempts-list { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
-.attempt-row { display: grid; grid-template-columns: 1fr 1fr auto auto auto auto; gap: 6px; align-items: center; }
-.attempt-row input, .attempt-row select { padding: 6px; font-size: 13px; }
-.add-attempt { background: var(--input-bg); border: 1px solid var(--border); color: var(--fg); padding: 8px; border-radius: 6px; }
+.attempts-list { display: flex; flex-direction: column; gap: 10px; margin: 8px 0; }
+.attempt-row { border: 1px solid var(--border); border-radius: 8px; padding: 10px; background: var(--input-bg); }
+.attempt-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.attempt-num { font-weight: 600; font-size: 0.9rem; color: var(--accent); }
+.attempt-head button[data-action="remove-attempt"] { background: transparent; color: var(--muted); border: 1px solid var(--border); width: 34px; height: 34px; border-radius: 6px; font-size: 1.2rem; }
+.attempt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.attempt-field { display: flex; flex-direction: column; gap: 4px; font-size: 0.8rem; color: var(--muted); }
+.attempt-field input, .attempt-field select { width: 100%; }
+.attempt-notes { margin-top: 8px; }
+.add-attempt { background: var(--input-bg); border: 1px solid var(--border); color: var(--fg); padding: 10px; border-radius: 6px; width: 100%; font-size: 15px; }
 
 code { background: var(--input-bg); padding: 2px 4px; border-radius: 4px; font-size: 12px; }
 
