@@ -406,8 +406,9 @@ export function programDayInfo(date = new Date(), startDateIso = config.programS
   const dayIndex = Math.floor((today - start) / MS_PER_DAY); // 0-based
   const week = Math.floor(dayIndex / 7) + 1; // 1-based
   const phase = week <= 6 ? 1 : week <= 14 ? 2 : week <= 20 ? 3 : 4;
-  // Deload weeks: last week of phase 1, mid-phase-2, last week of phase 3.
-  const deload = week === 6 || week === 12 || week === 18;
+  // Deload weeks. Phase-1 deload pulled forward 6 → 4 after a Week-4
+  // under-recovery episode (Day 9, 2026-06-15).
+  const deload = week === 4 || week === 12 || week === 18;
   const dayOfWeek = today.getDay();
   const sessionKeys = DAY_OF_WEEK_TO_SESSIONS[dayOfWeek];
   return { dayIndex, week, phase, deload, dayOfWeek, sessionKeys };

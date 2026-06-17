@@ -1,16 +1,20 @@
 # Hybrid Athlete Training Log
 
 **Program start:** 2026-05-25
-**Last updated:** 2026-06-12 (Day 8 review — Kilterboard)
+**Last updated:** 2026-06-15 (Day 9 review — under-recovery, deload pulled forward)
 
 ## Active Adjustments
 
-- **db-rows.load_kg** — 28 (was program 26). Reason: Day 8 3×10 @ 26 at RPE 8, down from RPE 9 on Day 1 with no fatigue complaint — Day-1 progression condition met. Auto-expire: 1 clean session of 3×10 @ 28 at RPE ≤ 8. (set 2026-06-12)
-- **pinch-block-balance.load_kg** — 22 (was program 20). Reason: RPE 8 → 7 across two sessions, "feel solid" on the fresh-body retest. Auto-expire: 1 clean session of 3×12s/side @ 22 at RPE ≤ 8. (set 2026-06-12)
-- **pinch-block.load_kg** — 22 (was program 20). Reason: Day 4 read RPE 7 at 20kg with headroom noted. Finger guardrail caveat: two pinch bumps in one review — if either pinch block reads RPE 9+ next exposure, drop both back to 20. Auto-expire: 1 clean session of 3×12s/side @ 22 at RPE ≤ 8. (set 2026-06-12)
+- **fingerboard-maxhangs.load_kg** — 30 (was program 32.5). Reason: Day 9 catastrophic collapse 8/1/1/1s @ 32.5, RPE 10 — but no pain, pure force-generation failure (couldn't load the hold), i.e. systemic under-recovery not calibration. 30kg was the last clean weight (Day 4, 4×8 RPE 8). Retest at 30 once recovered; only return to 32.5 after a clean 30. (set 2026-06-15)
+- **pinch-block.load_kg** — 20 (revert; was adjustment 22). Reason: GUARDRAIL TRIGGERED — Day 9 8/1/0s @ 22.5, RPE 10. The Day-8 bump caveat said drop both pinches if either reads RPE 9+. Done. (set 2026-06-15)
+- **pinch-block-balance.load_kg** — 20 (revert; was adjustment 22). Reason: same guardrail — both pinch loads revert together. (set 2026-06-15)
+- **db-rows.load_kg** — 28 (was program 26). Held — pull movement, untested since Day 8, not implicated in the finger collapse. Don't progress further until past the deload. Auto-expire: 1 clean session of 3×10 @ 28 at RPE ≤ 8. (set 2026-06-12)
 
 ## Watchlist
 
+- **🛌 DELOAD NOW (pulled forward from Wk 6 to Wk 4)** — Day 9 finger collapse + "feel weak despite a rest weekend" = systemic under-recovery, not a calibration miss. Take 2-3 days fully off (no hangs, no max climbing), prioritise sleep, then return at deload intensity: ~60% volume, finger work easy and submaximal, RPE ≤ 7. Retest fingerboard at 30kg only when it feels normal. Deload weeks now 4/12/18 (was 6/12/18).
+- **🚨 sleep is the root cause, not a footnote** — FOUR weeks at 6h. Maximal strength is the first thing chronic sleep debt takes, and it just took it. This is the single highest-leverage change available and it costs nothing. Target 7.5h+. If you fix one variable this month, fix this.
+- **under-eating / illness check** — weak-despite-rest + mood 2/5 can also come from eating too little for 5-6 sessions/week, or something viral brewing. Not a diagnosis — just worth a look alongside the sleep fix.
 - **arc-protocol drift** — Day 7 ARC ran at 80% effort with 3 falls and "push to failure" vs prescribed 55% / 0 falls. ARC trains the aerobic base only when it's continuous easy climbing; at 80% it becomes power-endurance and steals recovery from Thu kilter. Next ARC: drop to routes you can climb without falling, stay on the wall, target ~55%.
 - **pre-session form on PM sessions** — ARC logged with sleep/mood/soreness zeros. AM sessions get real values; PM sessions don't. Acceptable (sleep was already logged that morning) but mood pre-climb is useful — fill if convenient.
 - **lateral-raises 6kg test** — next push: program is 6kg now. If below 4×15 or RPE 9+, back off.
@@ -18,9 +22,9 @@
 - **db-ohp recovery** — Day 6 failed 4×7 @ 17.5 (7/6/5/4 RPE 9). Program now prescribes 17.5; if next push fails again → deload to 15kg.
 - **back-to-back upper-body fatigue** — Tue/Wed pair both at RPE 9 on upper movements. Watch next pair.
 - **toes-to-bar regression** — 6/6/5 → 6/6/4. Hold 3×6.
-- **kilterboard one-shy** — Day 8: 5/5/4 @ V4/30° RPE 8 (Day 1 was 5/4/4). First clean 5/5/5 at RPE ≤ 8 unlocks P2 volume (3×6). (Set-3 grade logged as "V" — treated as V4 typo.)
-- **sleep + mood trajectory** — 6h/6h/6h/6h/8h/6h across logged AM sessions; mood 3/2/3/2/3/3. The single 8h night didn't stick. Still the cheapest gain available.
-- **front-lever progression** — 12/12/10 → 12/12/11. If next climbing day lands 12/12/12, test one-leg.
+- **kilterboard one-shy** — Day 8: 5/5/4 @ V4/30° RPE 8 (Day 1 was 5/4/4). First clean 5/5/5 at RPE ≤ 8 unlocks P2 volume (3×6). On hold through the deload.
+- **front-lever progression** — 12/12/10 → 12/12/11 → 12/12/10 (Day 9, "forearms fatigued from earlier" — consistent with the under-recovery). Hold Adv tuck; one-leg test deferred until post-deload.
+- **OAPU ready to progress** — Day 9 "felt easier, maybe move to 2-finger one hand." Genuine progress signal, but DON'T add finger intensity mid-under-recovery. Bank it; revisit after the deload.
 - **bulgarian-split-squat** — 17.5kg 3×8 RPE 9. Hold.
 - **copenhagen-hip-dips** — "getting easy," soft bump candidate (P2 is 3×8+8).
 - **saturday project sessions** — still zero entries. The program's entire goal (Vietnam, Oct) has no data. Log grades + burns + one note.
@@ -404,6 +408,22 @@
 - Notes: (skipped)
 
 ## Daily Reviews
+
+### 2026-06-15 — Mon Wk 4 — review of Day 9 (Climbing Strength) — UNDER-RECOVERY
+**Summary:** "I feel weak" — and the data agrees. The signature is unmistakable: gross pulling strength held (pull-ups 7/7/7/6 @ 22.5, RPE 8, on plan) while maximal finger strength collapsed completely — fingerboard 8/1/1/1s @ 32.5 RPE 10, pinch 8/1/0s @ 22.5 RPE 10. Confirmed with user: **no pain anywhere**, just inability to generate force ("couldn't lift my feet to load the hold"). That rules out a pulley/tendon injury and points squarely at systemic under-recovery — which always hits the slowest-recovering tissue (finger connective tissue) first.
+
+The clincher: "didn't do much on the weekend, feeling fresh but doesn't feel like it." Acute fatigue resolves with rest. Weakness that survives a rest weekend is accumulated under-recovery. Most likely driver: **four consecutive weeks at 6h sleep**, plus heavy finger work Friday (kilter + pinch) that never cleared by Monday, plus — candidly — the two pinch progressions I stacked on Day 8 while sleep was already the standing flag. My miss; reverted.
+
+**Calibration (deload-direction, committed):**
+- DELOAD pulled forward Wk 6 → Wk 4. 2-3 days fully off, then ~60% volume at RPE ≤ 7, finger work submaximal.
+- fingerboard 32.5 → 30 (last clean weight; retest there post-deload).
+- Both pinch loads 22 → 20 (guardrail triggered: RPE 10 ≥ 9).
+- db-rows held at 28 (not implicated; don't progress further until past deload).
+- OAPU 2-finger progression and front-lever one-leg: both earned, both deferred — no new finger/max intensity during recovery.
+
+**Root cause flagged hard:** sleep. Four weeks at 6h is the headline now, not a footnote. Max strength is the canary for sleep debt and it just fell over. Also flagged under-eating / illness as worth a glance.
+
+**The reassuring part:** this is the fixable branch. No injury, no structural problem — a depleted system that needs sleep and a few easy days. Fingers usually bounce back fast once the systemic debt is paid.
 
 ### 2026-06-12 — Fri Wk 3 — review of Day 8 (Kilterboard P-E)
 **Summary:** Best-executed session of the program. First session ever with zero skips. ER done at its new top-of-session slot (2×12 @ 7kg RPE 7, "good burn") — the structural fix worked on first exposure after going 0-for-3. Kilter 5/5/4 @ V4/30° RPE 8, failed only the very last route (Day 1 was 5/4/4 with "heavy and hard"). DB rows 3×10 @ 26 at RPE 8, down from 9. Pinch balance 3×12s @ 20 RPE 7, "feel solid." Rest day Thursday before this (kilter shifted Thu→Fri via picker) — and the whole session reads fresher for it.
