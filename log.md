@@ -30,6 +30,59 @@
 
 ## Sessions
 
+### 2026-06-18 — Thu — Push Hypertrophy + Core + ER
+
+**Phase:** 1 · **Week:** 4 · **Sleep prev night:** 6h · **Mood:** 3/5 · **Soreness:** 2/5 · **Body:** —
+
+**Block A — Weighted Dips** _(weighted_reps)_
+- Set 1: reps: 8 · load_kg: 20
+- Set 2: reps: 8 · load_kg: 20
+- Set 3: reps: 5 · load_kg: 20
+- rpe: 8
+- Notes: Failed on the last set.
+
+**Block B — DB Overhead Press** _(weighted_reps)_
+- Set 1: reps: 7 · load_kg: 17.5
+- Set 2: reps: 7 · load_kg: 17.5
+- Set 3: reps: 7 · load_kg: 17.5
+- Set 4: reps: 5 · load_kg: 17.5
+- rpe: 9
+- Notes: Failed on the last set
+
+**Block C — Lateral Raises** _(weighted_reps)_
+- Set 1: reps: 15 · load_kg: 6
+- Set 2: reps: 15 · load_kg: 6
+- Set 3: reps: 15 · load_kg: 6
+- rpe: 8
+- Notes: 6 kg feel like a good weight
+
+**Block D — Explosive push-ups** _(plyo)_
+- Set 1: reps: 8 · clapping_reps: 8
+- Set 2: reps: 8 · clapping_reps: 8
+- Set 3: reps: 8 · clapping_reps: 5
+- rpe: 8
+- Notes: Felt good on the first 2 sets
+
+**Block E — Dragon Flag** _(weighted_reps)_
+- Set 1: reps: 5 · load_kg: 0
+- Set 2: reps: 5 · load_kg: 0
+- Set 3: reps: 5 · load_kg: 0
+- rpe: 8
+- Notes: Felt easier now. Although still burn on the last set
+
+**Block F — Toes-to-Bar** _(weighted_reps)_
+- Set 1: reps: 6 · load_kg: 0
+- Set 2: reps: 6 · load_kg: 0
+- Set 3: reps: 6 · load_kg: 0
+- rpe: 8
+- Notes: Candle all the set cleanly now
+
+**Block G — Shoulder External Rotation (Side-lying Dumbbell)** _(shoulder_er)_
+- Set 1: reps: 12 · load_kg: 7
+- Set 2: reps: 12 · load_kg: 7
+- position: 1 · rpe: 8
+- Notes: Good burn
+
 ### 2026-06-17 — Wed — Hard Sport Climbing (Project)
 
 **Phase:** 1 · **Week:** 4 · **Sleep prev night:** 6h · **Mood:** 4/5 · **Soreness:** 2/5 · **Body:** —
