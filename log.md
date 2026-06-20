@@ -30,6 +30,37 @@
 
 ## Sessions
 
+### 2026-06-20 — Sat — Kilterboard P-E + Pull Accessories
+
+**Phase:** 1 · **Week:** 4 · **Sleep prev night:** 6h · **Mood:** 3/5 · **Soreness:** 3/5 · **Body:** —
+
+**Block A — Shoulder External Rotation (Side-lying Dumbbell)** _(shoulder_er)_
+- Set 1: reps: 12 · load_kg: 7
+- Set 2: reps: 12 · load_kg: 7
+- position: 2 · rpe: 9
+- Notes: I tried nee facing down position but I think I don't have the right pose. I can still good burn.
+
+**Block B — Kilterboard 4×4** _(climbing_kilterboard)_
+- Set 1: grade: V4 · routes_climbed: 5
+- Set 2: grade: V4 · routes_climbed: 5
+- Set 3: grade: V4 · routes_climbed: 4
+- angle_deg: 30 · rest_min_between_blocks: 10 · rpe: 8
+- Notes: Failed on almost the last hold on the last route. Feel slightly better than the last session.
+
+**Block C — Heavy DB Rows** _(weighted_reps)_
+- Set 1: reps: 10 · load_kg: 28
+- Set 2: reps: 10 · load_kg: 28
+- Set 3: reps: 10 · load_kg: 28
+- rpe: 9
+- Notes: Feel heavy but good weight
+
+**Block D — Pinch Block (balance sets)** _(weighted_time_asymmetric)_
+- Set 1: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- Set 2: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- Set 3: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- rpe: 7
+- Notes: Use 20kg plate due to availability. Felt easier now at this weight
+
 ### 2026-06-18 — Thu — Push Hypertrophy + Core + ER
 
 **Phase:** 1 · **Week:** 4 · **Sleep prev night:** 6h · **Mood:** 3/5 · **Soreness:** 2/5 · **Body:** —
