@@ -30,6 +30,16 @@
 
 ## Sessions
 
+### 2026-06-29 — Mon — Z2 Run with GF (mandatory)
+
+**Phase:** 1 · **Week:** 6 · **Sleep prev night:** 5h · **Mood:** 2/5 · **Soreness:** 1/5 · **Body:** —
+
+**Block A — Z2 run** _(running_z2)_
+- duration_min: 36 · avg_hr: 156
+- Notes: Have to stop half way to grab my stuff. But went back to the other half within 20mins and felt okay
+
+**Global notes:** Came back after a week of hiatus. Lost of sleep and fight with girlfriend.
+
 ### 2026-06-20 — Sat — Kilterboard P-E + Pull Accessories
 
 **Phase:** 1 · **Week:** 4 · **Sleep prev night:** 6h · **Mood:** 3/5 · **Soreness:** 3/5 · **Body:** —
