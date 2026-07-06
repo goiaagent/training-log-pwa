@@ -30,6 +30,62 @@
 
 ## Sessions
 
+### 2026-07-06 — Mon — Climbing Strength + Skills + Prehab
+
+**Phase:** 2 · **Week:** 7 · **Sleep prev night:** 0h · **Mood:** 3/5 · **Soreness:** 3/5 · **Body:** —
+
+**Block A — Shoulder External Rotation (Side-lying Dumbbell)** _(shoulder_er)_
+- Set 1: reps: 12 · load_kg: 7
+- Set 2: reps: 12 · load_kg: 7
+- position: 1 · rpe: 6
+- Notes: No 7.5 kg available so I Stick with 7kgn this session but next session I will bump to 8
+
+**Block B — Reverse Wrist Curls** _(weighted_reps)_
+- Set 1: reps: 15 · load_kg: 6
+- Set 2: reps: 15 · load_kg: 6
+- Set 3: reps: 15 · load_kg: 6
+- rpe: 7
+- Notes: Three sets clean. I will bump to 7Kg next
+
+**Block C — Front Lever progression** _(bodyweight_time)_
+- Set 1: hold_seconds: 10
+- Set 2: hold_seconds: 10
+- Set 3: hold_seconds: 10
+- stage: One leg out
+- Notes: Feels solid I can add more time for this exercise
+
+**Block D — OAPU finger-drop** _(bodyweight_reps_per_side)_
+- Set 1: reps_left: 3 · reps_right: 3
+- Set 2: reps_left: 3 · reps_right: 3
+- Set 3: reps_left: 3 · reps_right: 3
+- progression: Back 3 fingers ( middle, ring, pinky)
+- Notes: Feel my solid now maybe I will reduce the finger for one next session
+
+**Block E — Fingerboard MaxHangs (20mm)** _(weighted_time)_
+- Set 1: hold_seconds: 8 · load_kg: 30
+- Set 2: hold_seconds: 8 · load_kg: 30
+- Set 3: hold_seconds: 8 · load_kg: 30
+- Set 4: hold_seconds: 8 · load_kg: 30
+- rpe: 7
+- Notes: Feel solid just until the very last second of the last set well I lose just a little bit of power now
+
+**Block F — Pinch Block** _(weighted_time_asymmetric)_
+- Set 1: hold_s_left: 12 · hold_s_right: 12 · load_kg: 20
+- Set 2: hold_s_left: 12 · hold_s_right: 12 · load_kg: 22.5
+- Set 3: hold_s_left: 12 · hold_s_right: 12 · load_kg: 22.5
+- rpe: 7
+- Notes: Feel solid even up the weight
+
+**Block G — Weighted Pull-Ups** _(weighted_reps)_
+- Set 1: reps: 6 · load_kg: 25
+- Set 2: reps: 6 · load_kg: 25
+- Set 3: reps: 6 · load_kg: 25
+- Set 4: reps: 5 · load_kg: 25
+- rpe: 8
+- Notes: Fell on the last rep and the last set
+
+**Global notes:** just got back from very long rest.
+
 ### 2026-06-29 — Mon — Z2 Run with GF (mandatory)
 
 **Phase:** 1 · **Week:** 6 · **Sleep prev night:** 5h · **Mood:** 2/5 · **Soreness:** 1/5 · **Body:** —
